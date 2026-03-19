@@ -1,0 +1,1 @@
+export const baseURL: string | undefined = process.env.BACKEND_API_URL;

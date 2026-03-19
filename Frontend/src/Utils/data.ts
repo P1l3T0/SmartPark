@@ -1,0 +1,18 @@
+export const carBrands: string[] = [
+  "BMW",
+  "Mercedes-Benz",
+  "Toyota",
+  "Honda",
+  "Ford",
+  "Chevrolet",
+  "Volkswagen",
+  "Audi",
+  "Hyundai",
+  "Nissan",
+  "Kia",
+  "Subaru",
+  "Mazda",
+  "Lexus",
+  "Jeep",
+  "Dodge",
+];
