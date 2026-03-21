@@ -24,9 +24,9 @@ const MobileMenuSidebar = ({ isMobileMenuOpen, toggleMobileMenu }: MobileMenuSid
         </div>
 
         <div className="flex flex-col gap-2 items-center">
-          <LinkButton to="/bookings" label="Bookings" />
-          <LinkButton to="/parking-spots" label="Parking Spots" />
           <LinkButton to="/vehicles" label="Vehicles" />
+          <LinkButton to="/parking-spots" label="Parking Spots" />
+          <LinkButton to="/bookings" label="Bookings" />
         </div>
 
         <div className="flex flex-col gap-2 items-center mt-auto">

@@ -40,11 +40,7 @@ const LoginForm = () => {
               </FieldWrapper>
             </FormFieldSet>
 
-            <FormButton
-              to="/register"
-              text="Log In"
-              formRenderProps={formRenderProps}
-            />
+            <FormButton to="/register" text="Log In" formRenderProps={formRenderProps} />
           </FormElement>
         )}
       />
