@@ -11,6 +11,7 @@ const LoginForm = () => {
   return (
     <>
       <Form
+        id="login-form"
         onSubmit={handleSubmit}
         render={(formRenderProps: FormRenderProps) => (
           <FormElement className="space-y-6">

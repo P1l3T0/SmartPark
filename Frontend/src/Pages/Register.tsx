@@ -1,7 +1,9 @@
+import RegisterContainer from "../Components/Auth/Register/RegisterContainer";
+
 const Register = () => {
   return (
     <>
-      <h1>Register</h1>
+      <RegisterContainer />
     </>
   );
 };
