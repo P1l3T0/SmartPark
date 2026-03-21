@@ -10,8 +10,8 @@ interface ThemeContextType {
 };
 
 const KENDO_THEMES = {
-  light: "https://unpkg.com/@progress/kendo-theme-bootstrap@12.2.1/dist/bootstrap-main.css",
-  dark: "https://unpkg.com/@progress/kendo-theme-bootstrap@12.2.1/dist/bootstrap-main-dark.css",
+  dark: "https://unpkg.com/@progress/kendo-theme-bootstrap@13.0.0/dist/bootstrap-main-dark.css",
+  light: "https://unpkg.com/@progress/kendo-theme-bootstrap@13.0.0/dist/bootstrap-main.css",
 };
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
