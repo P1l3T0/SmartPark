@@ -77,7 +77,7 @@ const VehicleForm = ({ onVehicleAdded }: VehicleFormProps) => {
           <Button
             type="submit"
             themeColor={"primary"}
-            className="w-full mt-3"
+            className="w-full mt-10"
             disabled={!formRenderProps.allowSubmit}
           >
             Save Vehicle
