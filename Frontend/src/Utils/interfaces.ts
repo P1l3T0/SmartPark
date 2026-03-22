@@ -14,3 +14,10 @@ export interface LoginDto {
   email: string;
   password: string;
 }
+
+export interface VehicleDto {
+  brand: string;
+  model: string;
+  registrationNumber: string;
+  isPrimary: boolean;
+}
