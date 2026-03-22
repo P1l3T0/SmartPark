@@ -2,7 +2,7 @@ import type { FieldRenderProps } from "@progress/kendo-react-form";
 import { Checkbox, Input, MaskedTextBox } from "@progress/kendo-react-inputs";
 import { DropDownList } from "@progress/kendo-react-dropdowns";
 import { Error } from "@progress/kendo-react-labels";
-import { carBrands } from "../../../Utils/data";
+import { carBrands } from "../../../../Utils/data";
 
 const brandValidator = (value: string) => (value ? "" : "Brand is required");
 const modelValidator = (value: string) => (value ? "" : "Model is required");
