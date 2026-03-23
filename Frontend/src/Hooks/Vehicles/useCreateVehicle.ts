@@ -4,7 +4,7 @@ import type { DropDownListChangeEvent } from "@progress/kendo-react-dropdowns";
 import type { Vehicle } from "../../Utils/interfaces";
 import type { TextBoxChangeEvent } from "@progress/kendo-react-inputs";
 
-const useVehicle = (onVehicleAdded: () => void) => {
+const useCreateVehicle = (onVehicleAdded: () => void) => {
   const queryClient = useQueryClient();
 
   const [vehicle, setVehicle] = useState<Vehicle>({
@@ -27,7 +27,7 @@ const useVehicle = (onVehicleAdded: () => void) => {
   };
 
   const handleInputChange = (e: TextBoxChangeEvent) => {
-    const {name, value } = e.target;
+    const { name, value } = e.target;
 
     setVehicle({
       ...vehicle,
@@ -40,7 +40,7 @@ const useVehicle = (onVehicleAdded: () => void) => {
     const vehicles: Vehicle[] = existing ? JSON.parse(existing) : [];
     vehicles.push({
       ...vehicle,
-      id: vehicles.length + 1
+      id: vehicles.length + 1,
     });
     localStorage.setItem("vehicles", JSON.stringify(vehicles));
     onVehicleAdded();
@@ -66,4 +66,4 @@ const useVehicle = (onVehicleAdded: () => void) => {
   return { handleInputChange, handleDropDownChange, handleSubmit };
 };
 
-export default useVehicle;
+export default useCreateVehicle;

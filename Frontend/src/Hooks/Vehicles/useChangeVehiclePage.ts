@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { PageChangeEvent } from "@progress/kendo-react-data-tools";
 import type { Vehicle } from "../../Utils/interfaces";
 
-const useVehiclePage = (vehicles: Vehicle[]) => {
+const useChangeVehiclePage = (vehicles: Vehicle[]) => {
   const [page, setPage] = useState({
     skip: 0,
     take: 3,
@@ -21,4 +21,4 @@ const useVehiclePage = (vehicles: Vehicle[]) => {
   return { skip, take, pagedData, handlePageChange };
 };
 
-export default useVehiclePage;
+export default useChangeVehiclePage;

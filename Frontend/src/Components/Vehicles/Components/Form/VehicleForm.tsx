@@ -1,15 +1,15 @@
 import { Field, FieldWrapper, Form, FormElement, FormFieldSet, type FormRenderProps } from "@progress/kendo-react-form";
 import { Button } from "@progress/kendo-react-buttons";
 import useVehicleInputs from "./VehicleInputs";
-import useVehicle from "../../../../Hooks/Vehicles/useVehicle";
 import { CardBody, CardFooter } from "@progress/kendo-react-layout";
+import useCreateVehicle from "../../../../Hooks/Vehicles/useCreateVehicle";
 
 interface VehicleFormProps {
   onVehicleAdded: () => void;
 }
 
 const VehicleForm = ({ onVehicleAdded }: VehicleFormProps) => {
-  const { handleInputChange, handleDropDownChange, handleSubmit } = useVehicle(onVehicleAdded);
+  const { handleInputChange, handleDropDownChange, handleSubmit } = useCreateVehicle(onVehicleAdded);
   const {
     VehicleModelInput,
     VehicleBrandInput,
