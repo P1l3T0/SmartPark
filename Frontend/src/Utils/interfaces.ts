@@ -21,3 +21,15 @@ export interface VehicleDto {
   registrationNumber: string;
   isPrimary: boolean;
 }
+
+export interface User extends Base {
+  email: string;
+  username: string;
+}
+
+export interface Vehicle extends Base {
+  brand: string;
+  model: string;
+  registrationNumber: string;
+  isPrimary: boolean;
+}

@@ -1,10 +1,10 @@
 import { Button, Chip } from "@progress/kendo-react-buttons";
 import { Label } from "@progress/kendo-react-labels";
-import type { VehicleDto } from "../../../../Utils/interfaces";
+import type { Vehicle } from "../../../../Utils/interfaces";
 import BrandLogo from "./BrandLogo";
 
 interface VehicleItemRenderProps {
-  dataItem: VehicleDto;
+  dataItem: Vehicle;
 }
 
 const VehicleItemRender = (props: VehicleItemRenderProps) => {
@@ -12,8 +12,8 @@ const VehicleItemRender = (props: VehicleItemRenderProps) => {
 };
 
 const VehicleItem = ({ dataItem }: VehicleItemRenderProps) => {
-  const onEdit = () => console.log("edit");
-  const onDelete = () => console.log("delete");
+  const onEdit = () => console.log(`Edit vehicle with ID: ${dataItem.id}`);
+  const onDelete = () => console.log(`Delete vehicle with ID: ${dataItem.id}`);
 
   return (
     <div className="flex flex-col items-center gap-3 p-4 bg-card rounded-lg border border-border hover:shadow-md transition-all duration-200 h-full">

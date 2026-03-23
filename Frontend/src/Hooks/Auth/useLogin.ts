@@ -4,6 +4,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { loginEndPoint } from "../../Utils/endpoints";
 import type { LoginDto } from "../../Utils/interfaces";
+import type { ChangeEvent } from "react";
+import type { TextBoxChangeEvent } from "@progress/kendo-react-inputs";
 //import useAuth from "../../Context/Auth/useAuth";
 
 const useLogin = () => {
@@ -16,15 +18,17 @@ const useLogin = () => {
     password: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: TextBoxChangeEvent) => {
+    const {name, value } = e.target;
+
     setUser({
       ...user,
-      [e.target.name]: e.target.value,
+      [name as string]: value,
     });
   };
 
   const loginUser = async () => {
-    alert(JSON.stringify(user));
+    console.log(user);
     navigate("/home");
     //await axios
     //  .post(loginEndPoint, user, { withCredentials: true })

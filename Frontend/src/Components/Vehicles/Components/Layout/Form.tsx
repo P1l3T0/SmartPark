@@ -1,8 +1,12 @@
 import { Card, CardHeader } from "@progress/kendo-react-layout";
 import VehicleForm from "../Form/VehicleForm";
-import type { VehicleDto } from "../../../../Utils/interfaces";
+import type { Vehicle } from "../../../../Utils/interfaces";
 
-const Form = ({ setVehicles }: { setVehicles: React.Dispatch<React.SetStateAction<VehicleDto[]>> }) => {
+interface FormProps {
+  setVehicles: React.Dispatch<React.SetStateAction<Vehicle[]>>;
+}
+
+const Form = ({ setVehicles }: FormProps) => {
   const handleVehicleAdded = () => {
     const stored = localStorage.getItem("vehicles");
     if (stored) setVehicles(JSON.parse(stored));

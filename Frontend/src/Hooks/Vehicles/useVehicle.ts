@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { DropDownListChangeEvent } from "@progress/kendo-react-dropdowns";
-import type { VehicleDto } from "../../Utils/interfaces";
+import type { Vehicle } from "../../Utils/interfaces";
+import type { TextBoxChangeEvent } from "@progress/kendo-react-inputs";
 
 const useVehicle = (onVehicleAdded: () => void) => {
   const queryClient = useQueryClient();
 
-  const [vehicle, setVehicle] = useState<VehicleDto>({
+  const [vehicle, setVehicle] = useState<Vehicle>({
+    id: 0,
+    dateCreated: new Date(),
     brand: "",
     model: "",
     registrationNumber: "",
@@ -23,20 +26,22 @@ const useVehicle = (onVehicleAdded: () => void) => {
     });
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const name: string = e.target.name as string;
-    const value: string = e.target.value as string;
+  const handleInputChange = (e: TextBoxChangeEvent) => {
+    const {name, value } = e.target;
 
     setVehicle({
       ...vehicle,
-      [name]: value,
+      [name as string]: value,
     });
   };
 
   const createVehicle = async () => {
     const existing = localStorage.getItem("vehicles");
-    const vehicles: VehicleDto[] = existing ? JSON.parse(existing) : [];
-    vehicles.push(vehicle);
+    const vehicles: Vehicle[] = existing ? JSON.parse(existing) : [];
+    vehicles.push({
+      ...vehicle,
+      id: vehicles.length + 1
+    });
     localStorage.setItem("vehicles", JSON.stringify(vehicles));
     onVehicleAdded();
 
