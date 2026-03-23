@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { DropDownListChangeEvent } from "@progress/kendo-react-dropdowns";
 import type { VehicleDto } from "../../Utils/interfaces";
 
-const useVehicle = (onVehicleAdded?: () => void) => {
+const useVehicle = (onVehicleAdded: () => void) => {
   const queryClient = useQueryClient();
   //const { login } = useAuth();
 
@@ -39,7 +39,7 @@ const useVehicle = (onVehicleAdded?: () => void) => {
     const vehicles: VehicleDto[] = existing ? JSON.parse(existing) : [];
     vehicles.push(vehicle);
     localStorage.setItem("vehicles", JSON.stringify(vehicles));
-    onVehicleAdded?.();
+    onVehicleAdded();
 
     //await axios
     //  .post(loginEndPoint, user, { withCredentials: true })

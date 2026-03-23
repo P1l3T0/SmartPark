@@ -9,10 +9,9 @@ const registrationValidator = (value: string) => (value ? "" : "Registration Num
 
 const VehicleBrandInput = (fieldRenderProps: FieldRenderProps) => {
   const { validationMessage, ...rest } = fieldRenderProps;
-
   return (
     <div className="k-form-field-wrap">
-      <DropDownList {...rest} data={carBrands} defaultItem="Select Brand" />
+      <DropDownList {...rest} data={Object.keys(carBrands)} defaultItem="Select Brand" />
     </div>
   );
 }
