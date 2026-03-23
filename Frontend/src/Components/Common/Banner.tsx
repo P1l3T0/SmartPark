@@ -1,4 +1,9 @@
-const Banner = () => (
+interface BannerProps {
+  title: string;
+  description: string;
+}
+
+const Banner = ({ title, description }: BannerProps) => (
   <div className="border-b border-border bg-card px-4 py-3 shadow-sm">
     <div className="mx-auto max-w-7xl flex items-center gap-4">
       <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
@@ -12,11 +17,9 @@ const Banner = () => (
       </div>
       <div>
         <h1 className="text-xl font-bold text-text-primary leading-tight">
-          My Garage
+          {title}
         </h1>
-        <p className="text-sm text-text-secondary">
-          Manage your registered vehicles
-        </p>
+        <p className="text-sm text-text-secondary">{description}</p>
       </div>
     </div>
   </div>

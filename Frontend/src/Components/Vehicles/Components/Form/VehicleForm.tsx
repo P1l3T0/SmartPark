@@ -1,22 +1,15 @@
-import {
-  Field,
-  FieldWrapper,
-  Form,
-  FormElement,
-  FormFieldSet,
-  type FormRenderProps,
-} from "@progress/kendo-react-form";
+import { Field, FieldWrapper, Form, FormElement, FormFieldSet, type FormRenderProps } from "@progress/kendo-react-form";
 import { Button } from "@progress/kendo-react-buttons";
 import useVehicleInputs from "./VehicleInputs";
 import useVehicle from "../../../../Hooks/Vehicles/useVehicle";
+import { CardBody, CardFooter } from "@progress/kendo-react-layout";
 
 interface VehicleFormProps {
-  onVehicleAdded?: () => void;
+  onVehicleAdded: () => void;
 }
 
 const VehicleForm = ({ onVehicleAdded }: VehicleFormProps) => {
-  const { handleInputChange, handleDropDownChange, handleSubmit } =
-    useVehicle(onVehicleAdded);
+  const { handleInputChange, handleDropDownChange, handleSubmit } = useVehicle(onVehicleAdded);
   const {
     VehicleModelInput,
     VehicleBrandInput,
@@ -32,8 +25,10 @@ const VehicleForm = ({ onVehicleAdded }: VehicleFormProps) => {
       id="vehicle-form"
       onSubmit={handleSubmit}
       render={(formRenderProps: FormRenderProps) => (
-        <FormElement className="space-y-5">
-          <FormFieldSet className="space-y-4">
+        <>
+          <CardBody>
+            <FormElement id="vehicle-form" className="space-y-5">
+              <FormFieldSet className="space-y-4">
             <FieldWrapper>
               <Field
                 id={"brand"}
@@ -72,17 +67,21 @@ const VehicleForm = ({ onVehicleAdded }: VehicleFormProps) => {
                 onChange={handleInputChange}
               />
             </FieldWrapper>
-          </FormFieldSet>
-
-          <Button
-            type="submit"
-            themeColor={"primary"}
-            className="w-full mt-10"
-            disabled={!formRenderProps.allowSubmit}
-          >
-            Save Vehicle
-          </Button>
-        </FormElement>
+              </FormFieldSet>
+            </FormElement>
+          </CardBody>
+          <CardFooter>
+            <Button
+              type="submit"
+              form="vehicle-form"
+              themeColor={"primary"}
+              className="w-full"
+              disabled={!formRenderProps.allowSubmit}
+            >
+              Save Vehicle
+            </Button>
+          </CardFooter>
+        </>
       )}
     />
   );
