@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Banner from "./Components/Layout/Banner";
+import Banner from "../Common/Banner";
 import Form from "./Components/Layout/Form";
 import type { VehicleDto } from "../../Utils/interfaces";
 import VehicleList from "./Components/Layout/VehicleList";
@@ -14,7 +14,7 @@ const VehiclesContainer = () => {
 
   return (
     <main className="min-h-screen bg-background">
-      <Banner />
+      <Banner title={"My Garage"} description={"Manage your registered vehicles"} />
       <div className="mx-auto max-w-7xl px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8">
           <Form setVehicles={setVehicles} />

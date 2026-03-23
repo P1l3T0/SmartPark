@@ -1,3 +1,4 @@
+import { Card, CardHeader } from "@progress/kendo-react-layout";
 import VehicleForm from "../Form/VehicleForm";
 import type { VehicleDto } from "../../../../Utils/interfaces";
 
@@ -9,14 +10,12 @@ const Form = ({ setVehicles }: { setVehicles: React.Dispatch<React.SetStateActio
 
   return (
     <aside>
-      <div className="h-full rounded-2xl border border-border bg-card shadow-sm overflow-hidden">
-        <div className="border-b border-border bg-primary/5 p-4">
-          <h2 className="font-semibold text-text-primary">Add New Vehicle</h2>
-        </div>
-        <div className="px-4 py-5">
-          <VehicleForm onVehicleAdded={handleVehicleAdded} />
-        </div>
-      </div>
+      <Card className="border border-border shadow-md h-full">
+        <CardHeader className="border-border">
+          <h3 className="text-xl font-medium">Add New Vehicle</h3>
+        </CardHeader>
+        <VehicleForm onVehicleAdded={handleVehicleAdded} />
+      </Card>
     </aside>
   );
 };
