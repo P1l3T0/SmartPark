@@ -5,7 +5,6 @@ import type { VehicleDto } from "../../Utils/interfaces";
 
 const useVehicle = (onVehicleAdded: () => void) => {
   const queryClient = useQueryClient();
-  //const { login } = useAuth();
 
   const [vehicle, setVehicle] = useState<VehicleDto>({
     brand: "",
@@ -44,7 +43,6 @@ const useVehicle = (onVehicleAdded: () => void) => {
     //await axios
     //  .post(loginEndPoint, user, { withCredentials: true })
     //  .then(() => {
-    //    //login();
     //    navigate("/home");
     //    queryClient.invalidateQueries({ queryKey: ["user"] });
     //  })
