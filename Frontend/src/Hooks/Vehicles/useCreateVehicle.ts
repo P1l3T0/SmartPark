@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { DropDownListChangeEvent } from "@progress/kendo-react-dropdowns";
-import type { Vehicle } from "../../Utils/interfaces";
+import type { VehicleResponse } from "../../Utils/interfaces";
 import type { TextBoxChangeEvent } from "@progress/kendo-react-inputs";
 
 const useCreateVehicle = (onVehicleAdded: () => void) => {
   const queryClient = useQueryClient();
 
-  const [vehicle, setVehicle] = useState<Vehicle>({
+  const [vehicle, setVehicle] = useState<VehicleResponse>({ // Change to VehiceleRequest when API is ready
     id: 0,
     dateCreated: new Date(),
     brand: "",
@@ -37,7 +37,7 @@ const useCreateVehicle = (onVehicleAdded: () => void) => {
 
   const createVehicle = async () => {
     const existing = localStorage.getItem("vehicles");
-    const vehicles: Vehicle[] = existing ? JSON.parse(existing) : [];
+    const vehicles: VehicleResponse[] = existing ? JSON.parse(existing) : [];
     vehicles.push({
       ...vehicle,
       id: vehicles.length + 1,

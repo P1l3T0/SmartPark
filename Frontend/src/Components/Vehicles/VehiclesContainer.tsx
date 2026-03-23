@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import Banner from "../Common/Banner";
 import Form from "./Components/Layout/Form";
-import type { Vehicle } from "../../Utils/interfaces";
+import type { VehicleResponse } from "../../Utils/interfaces";
 import VehicleList from "./Components/Layout/VehicleList";
 
 const VehiclesContainer = () => {
-  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [vehicles, setVehicles] = useState<VehicleResponse[]>([]);
 
   useEffect(() => {
     const stored = localStorage.getItem("vehicles");

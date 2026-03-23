@@ -1,11 +1,11 @@
 import EmptyVehicles from "./NoVehicles";
 import VehicleItemRender from "./VehicleCard";
 import useChangeVehiclePage from "../../../../Hooks/Vehicles/useChangeVehiclePage";
-import type { Vehicle } from "../../../../Utils/interfaces";
+import type { VehicleResponse } from "../../../../Utils/interfaces";
 import { Pager } from "@progress/kendo-react-data-tools";
 import { Card, CardBody, CardFooter, CardHeader } from "@progress/kendo-react-layout";
 
-const VehicleList = ({ vehicles }: { vehicles: Vehicle[] }) => {
+const VehicleList = ({ vehicles }: { vehicles: VehicleResponse[] }) => {
   const { skip, take, pagedData, handlePageChange } = useChangeVehiclePage(vehicles);
 
   return (

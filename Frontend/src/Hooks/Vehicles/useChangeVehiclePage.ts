@@ -1,8 +1,8 @@
 import { useState } from "react";
 import type { PageChangeEvent } from "@progress/kendo-react-data-tools";
-import type { Vehicle } from "../../Utils/interfaces";
+import type { VehicleResponse } from "../../Utils/interfaces";
 
-const useChangeVehiclePage = (vehicles: Vehicle[]) => {
+const useChangeVehiclePage = (vehicles: VehicleResponse[]) => {
   const [page, setPage] = useState({
     skip: 0,
     take: 3,

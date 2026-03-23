@@ -1,10 +1,10 @@
 import { Button, Chip } from "@progress/kendo-react-buttons";
 import { Label } from "@progress/kendo-react-labels";
-import type { Vehicle } from "../../../../Utils/interfaces";
+import type { VehicleResponse } from "../../../../Utils/interfaces";
 import BrandLogo from "./BrandLogo";
 
 interface VehicleItemRenderProps {
-  dataItem: Vehicle;
+  dataItem: VehicleResponse;
 }
 
 const VehicleItemRender = (props: VehicleItemRenderProps) => {

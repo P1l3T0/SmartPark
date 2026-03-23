@@ -1,9 +1,9 @@
 import { Card, CardHeader } from "@progress/kendo-react-layout";
 import VehicleForm from "../Form/VehicleForm";
-import type { Vehicle } from "../../../../Utils/interfaces";
+import type { VehicleResponse } from "../../../../Utils/interfaces";
 
 interface FormProps {
-  setVehicles: React.Dispatch<React.SetStateAction<Vehicle[]>>;
+  setVehicles: React.Dispatch<React.SetStateAction<VehicleResponse[]>>;
 }
 
 const Form = ({ setVehicles }: FormProps) => {

@@ -3,8 +3,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { loginEndPoint } from "../../Utils/endpoints";
-import type { LoginDto } from "../../Utils/interfaces";
-import type { ChangeEvent } from "react";
+import type { UserRequest } from "../../Utils/interfaces";
 import type { TextBoxChangeEvent } from "@progress/kendo-react-inputs";
 //import useAuth from "../../Context/Auth/useAuth";
 
@@ -13,7 +12,7 @@ const useLogin = () => {
   const queryClient = useQueryClient();
   //const { login } = useAuth();
 
-  const [user, setUser] = useState<LoginDto>({
+  const [user, setUser] = useState<UserRequest>({
     email: "",
     password: "",
   });
@@ -28,7 +27,12 @@ const useLogin = () => {
   };
 
   const loginUser = async () => {
-    console.log(user);
+    const existing = localStorage.getItem("user");
+    if (existing) {
+      localStorage.removeItem("user");
+    }
+    localStorage.setItem("user", JSON.stringify(user));
+
     navigate("/home");
     //await axios
     //  .post(loginEndPoint, user, { withCredentials: true })

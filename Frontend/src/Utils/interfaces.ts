@@ -4,32 +4,38 @@ interface Base {
 }
 
 // Auth
-export interface RegisterDto {
+
+export interface UserRequest {
+  email: string;
+  username?: string;
+  password: string;
+}
+
+interface UserResponse extends Base {
   email: string;
   username: string;
-  password: string;
 }
 
-export interface LoginDto {
-  email: string;
-  password: string;
-}
+// Vehicle
 
-export interface VehicleDto {
+export interface VehicleRequest {
   brand: string;
   model: string;
   registrationNumber: string;
   isPrimary: boolean;
 }
 
-export interface User extends Base {
-  email: string;
-  username: string;
-}
-
-export interface Vehicle extends Base {
+export interface VehicleResponse extends Base {
   brand: string;
   model: string;
   registrationNumber: string;
   isPrimary: boolean;
+}
+
+export interface Booking extends Base {
+  vehicle: string;
+  parkingSpot: string;
+  startTime: Date;
+  endTime: Date;
+  isCancelled: boolean;
 }
