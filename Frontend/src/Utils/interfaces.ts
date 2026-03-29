@@ -7,11 +7,11 @@ interface Base {
 
 export interface UserRequest {
   email: string;
-  username?: string;
+  username: string;
   password: string;
 }
 
-interface UserResponse extends Base {
+export interface UserResponse extends Base {
   email: string;
   username: string;
 }
@@ -38,4 +38,11 @@ export interface Booking extends Base {
   startTime: Date;
   endTime: Date;
   isCancelled: boolean;
+}
+
+export interface ParkingSpotResponse extends Base {
+  name: string;
+  slotNumber: string;
+  occupiedBy: string | null;
+  isAvailable: boolean;
 }
