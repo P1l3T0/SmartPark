@@ -1,3 +1,5 @@
+import type { JSX } from "react/jsx-runtime";
+
 interface Base {
   id: number;
   dateCreated: Date;
@@ -44,5 +46,18 @@ export interface ParkingSpotResponse extends Base {
   name: string;
   slotNumber: string;
   occupiedBy: string | null;
-  isAvailable: boolean;
+  status: ParkingSpotStatus;
+}
+
+export type ParkingSpotStatus = "Available" | "Occupied" | "OccupiedByMe";
+
+export interface ParkingSpotConfig {
+  bg: string;
+  icon: JSX.Element;
+  label: string | ((occupiedBy: string | null) => string);
+  value?: string | number;
+  color?: string;
+  border?: string;
+  text?: string;
+  dot?: string;
 }
