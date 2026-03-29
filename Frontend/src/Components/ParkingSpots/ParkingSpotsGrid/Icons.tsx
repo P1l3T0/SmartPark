@@ -30,7 +30,6 @@ const statusConfig: Record<ParkingSpotStatus, ParkingSpotConfig> = {
     bg: "bg-success/10",
     text: "text-success",
     dot: "bg-success",
-    label: (_occupiedBy: string | null) => "Available",
     icon: <AvailableIcon />,
   },
   OccupiedByMe: {
@@ -38,7 +37,6 @@ const statusConfig: Record<ParkingSpotStatus, ParkingSpotConfig> = {
     bg: "bg-primary/10",
     text: "text-primary",
     dot: "bg-primary",
-    label: (_occupiedBy: string | null) => "My Vehicle",
     icon: <KeyIcon />,
   },
   Occupied: {
@@ -46,7 +44,6 @@ const statusConfig: Record<ParkingSpotStatus, ParkingSpotConfig> = {
     bg: "bg-error/10",
     text: "text-error",
     dot: "bg-error",
-    label: (occupiedBy: string | null) => occupiedBy ?? "Occupied",
     icon: <CarIcon />,
   },
 };

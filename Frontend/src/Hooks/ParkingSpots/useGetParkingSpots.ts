@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { ParkingSpotResponse, ParkingSpotStatus} from "../../Utils/interfaces";
 
-const MY_SPOT_ID = 3;
+const MY_SPOT_ID = 2;
 
 const useGetParkingSpots = () => {
   const ROWS = ["A", "B", "C", "D"];

@@ -7,10 +7,7 @@ const ParkingGrid = () => {
   return (
     <div className="flex flex-col gap-3">
       {ROWS.map((row, rowIdx) => {
-        const rowSpots = parkingSpots.slice(
-          rowIdx * COLS.length,
-          (rowIdx + 1) * COLS.length,
-        );
+        const rowSpots = parkingSpots.slice(rowIdx * COLS.length, (rowIdx + 1) * COLS.length);
         const isLastRow = rowIdx === ROWS.length - 1;
 
         return (

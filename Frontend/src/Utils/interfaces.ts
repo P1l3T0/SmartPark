@@ -54,7 +54,7 @@ export type ParkingSpotStatus = "Available" | "Occupied" | "OccupiedByMe";
 export interface ParkingSpotConfig {
   bg: string;
   icon: JSX.Element;
-  label: string | ((occupiedBy: string | null) => string);
+  label?: string;
   value?: string | number;
   color?: string;
   border?: string;
