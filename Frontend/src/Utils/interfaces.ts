@@ -43,7 +43,6 @@ export interface Booking extends Base {
 }
 
 export interface ParkingSpotResponse extends Base {
-  name: string;
   slotNumber: string;
   occupiedBy: string | null;
   status: ParkingSpotStatus;
