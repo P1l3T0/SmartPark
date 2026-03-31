@@ -1,7 +1,9 @@
+import LoginContainer from "../Components/Auth/Login/LoginContainer";
+
 const Login = () => {
   return (
     <>
-      <h1>Login</h1>
+      <LoginContainer />
     </>
   );
 };

@@ -18,9 +18,9 @@ const Navbar = () => {
             </div>
 
             <div className="hidden md:flex gap-3 items-center">
-              <LinkButton to="/bookings" label="Bookings" />
-              <LinkButton to="/parking-spots" label="Parking Spots" />
               <LinkButton to="/vehicles" label="Vehicles" />
+              <LinkButton to="/parking-spots" label="Parking Spots" />
+              <LinkButton to="/bookings" label="Bookings" />
             </div>
 
             <div className="hidden md:flex gap-3 items-center">

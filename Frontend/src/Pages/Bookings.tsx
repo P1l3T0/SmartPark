@@ -1,7 +1,9 @@
+import BookingsContainer from "../Components/Bookings/BookingsContainer";
+
 const Bookings = () => {
   return (
     <>
-      <h1>Bookings</h1>
+      <BookingsContainer />
     </>
   );
 };

@@ -1,7 +1,9 @@
+import ParkingSpotContainer from "../Components/ParkingSpots/ParkingSpotContainer";
+
 const ParkingSpots = () => {
   return (
     <>
-      <h1>Parking Spots</h1>
+      <ParkingSpotContainer />
     </>
   );
 };
