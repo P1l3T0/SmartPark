@@ -4,8 +4,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import lombok.Getter;
+
 import java.util.Date;
 
+@Getter
 @MappedSuperclass
 public abstract class BaseModel {
     @Id
@@ -15,14 +18,6 @@ public abstract class BaseModel {
 
     @Column(name = "DateCreated")
     private final Date dateCreated =  new Date();
-
-    public int  getId() { 
-        return this.id;
-    }
-
-    public Date getDateCreated() { 
-        return this.dateCreated;
-    }
 
     public abstract <T> T toDto(Class<T> type);
 }

@@ -1,8 +1,13 @@
 package com.example.SmartParkBackend.DTO.Response;
-import jakarta.persistence.Column;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.util.Date;
 
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class BaseDTO {
-    public int  id;
-    public Date dateCreated;
+    private int  id;
+    private Date dateCreated;
 }

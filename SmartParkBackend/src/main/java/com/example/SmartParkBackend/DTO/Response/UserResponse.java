@@ -8,8 +8,7 @@ public class UserResponse extends BaseDTO {
     private String email;
 
     public UserResponse(int id, Date dateCreated, String username, String email) {
-        this.id = id;
-        this.dateCreated = dateCreated;
+        super(id, dateCreated);
         this.username = username;
         this.email = email;
     }
