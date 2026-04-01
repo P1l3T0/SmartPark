@@ -8,12 +8,9 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Async
+
     @Override
     public CompletableFuture<UserResponse> getCurrentUser() {
-        User user = new User("P1l3T0", "vgan3v@gmail.com", new byte[8], new byte[8]);
-        UserResponse userResponse = user.toDto(UserResponse.class);
-
-        return CompletableFuture.completedFuture(userResponse);
+        return null;
     }
 }

@@ -3,20 +3,51 @@ import com.example.SmartParkBackend.DTO.Response.UserResponse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import java.util.Collection;
+import java.util.List;
 
 @Data
 @Entity
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "Users")
-public class User extends BaseModel {
+@Table(name = "users")
+public class User extends BaseModel implements UserDetails {
+    @Column(unique = true, nullable = false)
     private String username;
+
+    @Column(unique = true, nullable = false)
     private String email;
-    private byte[] passwordHash;
-    private byte[] passwordSalt;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(name = "verifcation_code")
+    private String verificationCode;
+
+    @Column(name = "verifcation_expiration")
+    private String verificationExpiration;
+
+    private boolean enabled;
+
+    public User(String username, String email, String password) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
+
+    public User() {
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 
     @Override
     public <T> T toDto(Class<T> type) {
