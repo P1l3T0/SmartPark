@@ -1,11 +1,9 @@
 package com.example.SmartParkBackend.Service;
 
-import com.example.SmartParkBackend.DTO.Request.UserRequest;
-import com.example.SmartParkBackend.DTO.Response.UserResponse;
-
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
+import com.example.SmartParkBackend.DTO.Response.UserResponseDto;
+import com.example.SmartParkBackend.Models.User;
 
 public interface UserService {
-    CompletableFuture<UserResponse> getCurrentUser();
+    int getCurrentUserId();
+    UserResponseDto getCurrentUser();
 }

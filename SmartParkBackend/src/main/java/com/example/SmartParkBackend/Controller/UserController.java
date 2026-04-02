@@ -24,17 +24,8 @@ public class UserController {
     @GetMapping("get/current-user")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<UserResponseDto> getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = ((User)authentication.getPrincipal());
-        UserResponseDto userDto = user.toDto(UserResponseDto.class);
+        UserResponseDto user = userService.getCurrentUser();
 
-        return ResponseEntity.ok(userDto);
-    }
-
-    @GetMapping("get/all")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok(user);
     }
 }
