@@ -1,9 +1,7 @@
 package com.example.SmartParkBackend.Models;
-import com.example.SmartParkBackend.DTO.Response.UserResponse;
+import com.example.SmartParkBackend.DTO.Response.UserResponseDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,21 +13,22 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User extends BaseModel implements UserDetails {
-    @Column(unique = true, nullable = false)
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "verifcation_code")
+    @Column(name = "verifcationCode")
     private String verificationCode;
 
-    @Column(name = "verifcation_expiration")
+    @Column(name = "verifcationExpiration")
     private LocalDateTime verificationCodeExpiresAt;
 
+    @Column(name = "enabled")
     private boolean enabled;
 
     public User(String username, String email, String password) {
@@ -53,7 +52,7 @@ public class User extends BaseModel implements UserDetails {
 
     @Override
     public <T> T toDto(Class<T> type) {
-        UserResponse userResponse = new UserResponse(
+        UserResponseDto userResponse = new UserResponseDto(
             this.getId(),
             this.getDateCreated(),
             this.getUsername(),
