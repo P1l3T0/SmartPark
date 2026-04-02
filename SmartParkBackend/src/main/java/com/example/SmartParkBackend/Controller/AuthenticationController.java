@@ -2,13 +2,11 @@ package com.example.SmartParkBackend.Controller;
 
 import com.example.SmartParkBackend.DTO.Request.LoginDto;
 import com.example.SmartParkBackend.DTO.Request.RegisterDto;
-import com.example.SmartParkBackend.DTO.Request.VerifyUserDto;
 import com.example.SmartParkBackend.DTO.Response.LoginResponseDto;
 import com.example.SmartParkBackend.Models.User;
 import com.example.SmartParkBackend.Service.AuthService;
 import com.example.SmartParkBackend.Service.JwtService;
 import com.example.SmartParkBackend.Service.ValidationService;
-import com.example.SmartParkBackend.Service.VerificationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,13 +21,12 @@ import java.util.concurrent.CompletableFuture;
 public class AuthenticationController {
     private final JwtService jwtService;
     private final AuthService authService;
-    private final VerificationService verificationService;
+
     private final ValidationService validationService;
 
-    public AuthenticationController(JwtService jwtService, AuthService authService, VerificationService verificationService, ValidationService validationService) {
+    public AuthenticationController(JwtService jwtService, AuthService authService, ValidationService validationService) {
         this.jwtService = jwtService;
         this.authService = authService;
-        this.verificationService = verificationService;
         this.validationService = validationService;
     }
 
@@ -40,7 +37,7 @@ public class AuthenticationController {
             authService.register(registerDto);
             return ResponseEntity.ok("Register successfully");
         } catch (RuntimeException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
     }
 
@@ -54,26 +51,6 @@ public class AuthenticationController {
             return ResponseEntity.ok(response);
         } catch (RuntimeException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
-        }
-    }
-
-    @PostMapping("verify")
-    public ResponseEntity<?> verify(@RequestBody VerifyUserDto verifyUserDto) {
-        try {
-            verificationService.verifyUser(verifyUserDto);
-            return ResponseEntity.ok("Account Verified Successfully");
-        } catch (RuntimeException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
-        }
-    }
-
-    @PostMapping("resend")
-    public ResponseEntity<?> resend(@RequestBody String email) {
-        try {
-            verificationService.resendVerificationCode(email);
-            return ResponseEntity.ok("Verification Code Sent");
-        } catch (RuntimeException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
 }
