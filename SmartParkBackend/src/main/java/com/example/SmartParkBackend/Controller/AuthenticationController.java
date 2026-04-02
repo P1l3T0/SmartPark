@@ -5,8 +5,10 @@ import com.example.SmartParkBackend.DTO.Request.RegisterDto;
 import com.example.SmartParkBackend.DTO.Request.VerifyUserDto;
 import com.example.SmartParkBackend.DTO.Response.LoginResponseDto;
 import com.example.SmartParkBackend.Models.User;
-import com.example.SmartParkBackend.Service.Impl.AuthenticationService;
-import com.example.SmartParkBackend.Service.Impl.JwtServiceImpl;
+import com.example.SmartParkBackend.Service.AuthService;
+import com.example.SmartParkBackend.Service.JwtService;
+import com.example.SmartParkBackend.Service.ValidationService;
+import com.example.SmartParkBackend.Service.VerificationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,28 +16,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.CompletableFuture;
+
 @RestController
 @RequestMapping("/auth/")
 public class AuthenticationController {
-    private final JwtServiceImpl jwtService;
-    private final AuthenticationService authenticationService;
+    private final JwtService jwtService;
+    private final AuthService authService;
+    private final VerificationService verificationService;
+    private final ValidationService validationService;
 
-    public AuthenticationController(JwtServiceImpl jwtService, AuthenticationService authenticationService) {
+    public AuthenticationController(JwtService jwtService, AuthService authService, VerificationService verificationService, ValidationService validationService) {
         this.jwtService = jwtService;
-        this.authenticationService = authenticationService;
+        this.authService = authService;
+        this.verificationService = verificationService;
+        this.validationService = validationService;
     }
 
     @PostMapping("register")
-    public ResponseEntity<User> register(@RequestBody RegisterDto registerDto) {
-        User user = authenticationService.registerAsync(registerDto);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<?> register(@RequestBody RegisterDto registerDto) {
+        try {
+            validationService.validateRegistration(registerDto);
+            authService.register(registerDto);
+            return ResponseEntity.ok("Register successfully");
+        } catch (RuntimeException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
     }
 
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
         try {
-            User user = authenticationService.authenticate(loginDto);
-            String jwtToken =  jwtService.generateToken(user);
+            User user = authService.login(loginDto).join();
+            String jwtToken = jwtService.generateToken(user);
             LoginResponseDto response = new LoginResponseDto(jwtToken, jwtService.getJwtExpirationTime());
 
             return ResponseEntity.ok(response);
@@ -45,9 +58,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("verify")
-    public ResponseEntity<?> verify(@RequestBody VerifyUserDto  verifyUserDto) {
+    public ResponseEntity<?> verify(@RequestBody VerifyUserDto verifyUserDto) {
         try {
-            authenticationService.verifyUser(verifyUserDto);
+            verificationService.verifyUser(verifyUserDto);
             return ResponseEntity.ok("Account Verified Successfully");
         } catch (RuntimeException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
@@ -57,7 +70,7 @@ public class AuthenticationController {
     @PostMapping("resend")
     public ResponseEntity<?> resend(@RequestBody String email) {
         try {
-            authenticationService.resendVerificationCode(email);
+            verificationService.resendVerificationCode(email);
             return ResponseEntity.ok("Verification Code Sent");
         } catch (RuntimeException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
