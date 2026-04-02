@@ -1,9 +1,14 @@
 package com.example.SmartParkBackend.Repo;
 
 import com.example.SmartParkBackend.Models.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-@RepositoryRestResource
-public interface UserRepo extends JpaRepository<User, Integer> {
+import java.util.Optional;
+
+@Repository
+public interface UserRepo extends CrudRepository<User, Integer> {
+    Optional<User> findById(int id);
+    Optional<User> findByEmail(String email);
+    Optional<User> findByUsername(String username);
 }
