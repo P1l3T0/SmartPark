@@ -1,5 +1,5 @@
 import { Error } from "@progress/kendo-react-labels";
-import { Input } from "@progress/kendo-react-inputs";
+import { Input, MaskedTextBox } from "@progress/kendo-react-inputs";
 import type { FieldRenderProps } from "@progress/kendo-react-form";
 
 const emailRegex: RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -43,12 +43,23 @@ const UsernameInput = (fieldRenderProps: FieldRenderProps) => {
   );
 };
 
+const VerificationCodeInput = (fieldRenderProps: FieldRenderProps) => {
+  const { validationMessage, visited, ...rest } = fieldRenderProps;
+  return (
+    <div className="k-form-field-wrap">
+      <MaskedTextBox {...rest} placeholder="Verification code" />
+      {visited && validationMessage && <Error>{validationMessage}</Error>}
+    </div>
+  );
+};
+
 const useInputValidations = () => ({
   emailValidator,
   EmailInput,
   passwordValidator,
   PasswordInput,
   UsernameInput,
+  VerificationCodeInput,
 });
 
 export default useInputValidations;
