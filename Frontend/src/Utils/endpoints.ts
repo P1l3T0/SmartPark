@@ -16,4 +16,5 @@ export const getCurrentUserEndPoint: string = `${userController}/get/current-use
 
 export const loginEndPoint: string = `${authController}/login`;
 export const registerEndPoint: string = `${authController}/register`;
+export const refreshTokenEndPoint: string = `${authController}/refresh`;
 export const verifyEndPoint: string = `${verificationController}/verify`;
