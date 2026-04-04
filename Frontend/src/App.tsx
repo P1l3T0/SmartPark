@@ -10,12 +10,15 @@ import Bookings from "./Pages/Bookings";
 import ProtectedRoute from "./Context/Auth/ProtectedRoute";
 import PersistLogin from "./Context/Auth/PersistLogin";
 import Navbar from "./Components/Common/Navbar";
+import useAuth from "./Context/Auth/useAuth";
 
 function App() {
+  const { isUserLoggedIn } = useAuth();
+  
   return (
     <>
       <BrowserRouter>
-        <Navbar />
+      {isUserLoggedIn && <Navbar />}
         <Routes>
           <Route element={<PersistLogin />}>
             <Route path="*" element={<NotFound />} />

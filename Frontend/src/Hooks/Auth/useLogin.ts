@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { loginEndPoint } from "../../Utils/endpoints";
 import type { UserRequest } from "../../Utils/interfaces";
 import type { TextBoxChangeEvent } from "@progress/kendo-react-inputs";
-//import useAuth from "../../Context/Auth/useAuth";
+import useAuth from "../../Context/Auth/useAuth";
 
 const useLogin = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  //const { login } = useAuth();
+  const { login } = useAuth();
 
   const [user, setUser] = useState<UserRequest>({
     email: "",
@@ -31,7 +31,7 @@ const useLogin = () => {
       .post(loginEndPoint, user)
       .then((res) => {
         document.cookie = `token=${res.data.token}; path=/;`;
-        //login();
+        login();
         navigate("/home");
         queryClient.invalidateQueries({ queryKey: ["user"] });
       })
