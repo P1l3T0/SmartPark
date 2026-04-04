@@ -9,12 +9,15 @@ const baseURL: string = (() => {
 })();
 
 const authController: string = `${baseURL}/auth`;
+const refreshController: string = `${baseURL}/refresh`;
 const verificationController: string = `${baseURL}/verification`;
 const userController: string = `${baseURL}/user`;
 
-export const getCurrentUserEndPoint: string = `${userController}/get/current-user`;
-
+// Auth
 export const loginEndPoint: string = `${authController}/login`;
 export const registerEndPoint: string = `${authController}/register`;
-export const refreshTokenEndPoint: string = `${authController}/refresh`;
+export const refreshTokenEndPoint: string = `${refreshController}/refresh`;
 export const verifyEndPoint: string = `${verificationController}/verify`;
+
+// User
+export const getCurrentUserEndPoint: string = `${userController}/get/current-user`;
