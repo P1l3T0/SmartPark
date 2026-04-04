@@ -18,7 +18,7 @@ const useLogin = () => {
   });
 
   const handleChange = (e: TextBoxChangeEvent) => {
-    const {name, value } = e.target;
+    const { name, value } = e.target;
 
     setUser({
       ...user,
@@ -27,28 +27,22 @@ const useLogin = () => {
   };
 
   const loginUser = async () => {
-    const existing = localStorage.getItem("user");
-    if (existing) {
-      localStorage.removeItem("user");
-    }
-    localStorage.setItem("user", JSON.stringify(user));
-
-    navigate("/home");
-    //await axios
-    //  .post(loginEndPoint, user, { withCredentials: true })
-    //  .then(() => {
-    //    //login();
-    //    navigate("/home");
-    //    queryClient.invalidateQueries({ queryKey: ["user"] });
-    //  })
-    //  .catch((err: AxiosError) => {
-    //    const error = err.response?.data as { title?: string };
-    //    alert(error?.title);
-    //  });
+    await axios
+      .post(loginEndPoint, user)
+      .then((res) => {
+        document.cookie = `token=${res.data.token}; path=/;`;
+        //login();
+        navigate("/home");
+        queryClient.invalidateQueries({ queryKey: ["user"] });
+      })
+      .catch((err: AxiosError) => {
+        const error = err.response?.data as { title?: string };
+        alert(error?.title);
+      });
   };
 
   const { mutateAsync } = useMutation({
-    mutationFn: loginUser
+    mutationFn: loginUser,
   });
 
   const handleSubmit = async () => mutateAsync();
