@@ -13,7 +13,7 @@ export interface UserRequest {
   password: string;
 }
 
-export interface VerifyUserDto {
+export interface VerificationRequest {
   email: string;
   verificationCode: string;
 }

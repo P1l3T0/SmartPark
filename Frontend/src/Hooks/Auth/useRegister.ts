@@ -1,13 +1,15 @@
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { registerEndPoint } from "../../Utils/endpoints";
 import type { UserRequest } from "../../Utils/interfaces";
 import type { TextBoxChangeEvent } from "@progress/kendo-react-inputs";
 //import useAuth from "../../Context/Auth/useAuth";
 
-const useRegister = (onRegistered: () => void) => {
+const useRegister = () => {
   //const { login } = useAuth();
+  const navigate = useNavigate();
 
   const [user, setUser] = useState<UserRequest>({
     email: "",
@@ -29,7 +31,7 @@ const useRegister = (onRegistered: () => void) => {
       .post(registerEndPoint, user)
       .then(() => {
         localStorage.setItem("email", user.email);
-        onRegistered();
+        navigate("/verify");
       })
       .catch((err: AxiosError) => {
         const error = err.response?.data as { title?: string };
