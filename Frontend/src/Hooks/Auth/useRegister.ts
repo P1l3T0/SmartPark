@@ -5,10 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { registerEndPoint } from "../../Utils/endpoints";
 import type { UserRequest } from "../../Utils/interfaces";
 import type { TextBoxChangeEvent } from "@progress/kendo-react-inputs";
-//import useAuth from "../../Context/Auth/useAuth";
 
 const useRegister = () => {
-  //const { login } = useAuth();
   const navigate = useNavigate();
 
   const [user, setUser] = useState<UserRequest>({

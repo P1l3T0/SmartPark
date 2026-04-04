@@ -10,6 +10,9 @@ const baseURL: string = (() => {
 
 const authController: string = `${baseURL}/auth`;
 const verificationController: string = `${baseURL}/verification`;
+const userController: string = `${baseURL}/user`;
+
+export const getCurrentUserEndPoint: string = `${userController}/get/current-user`;
 
 export const loginEndPoint: string = `${authController}/login`;
 export const registerEndPoint: string = `${authController}/register`;
