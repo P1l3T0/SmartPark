@@ -9,8 +9,13 @@ interface Base {
 
 export interface UserRequest {
   email: string;
-  username: string;
+  username?: string;
   password: string;
+}
+
+export interface VerifyUserDto {
+  email: string;
+  verificationCode: string;
 }
 
 export interface UserResponse extends Base {

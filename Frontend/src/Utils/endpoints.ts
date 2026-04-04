@@ -9,6 +9,8 @@ const baseURL: string = (() => {
 })();
 
 const authController: string = `${baseURL}/auth`;
+const verificationController: string = `${baseURL}/verification`;
 
 export const loginEndPoint: string = `${authController}/login`;
 export const registerEndPoint: string = `${authController}/register`;
+export const verifyEndPoint: string = `${verificationController}/verify`;
