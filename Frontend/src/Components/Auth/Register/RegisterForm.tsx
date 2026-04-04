@@ -4,8 +4,12 @@ import useRegister from "../../../Hooks/Auth/useRegister";
 import useInputValidations from "../Form/useInputValidations";
 import FormButton from "../../Buttons/FormButton";
 
-const RegisterForm = () => {
-  const { handleSubmit, handleChange } = useRegister();
+interface RegisterFormProps {
+  onRegistered: () => void;
+}
+
+const RegisterForm = ({ onRegistered }: RegisterFormProps) => {
+  const { handleSubmit, handleChange } = useRegister(onRegistered);
   const { emailValidator, EmailInput, passwordValidator, PasswordInput, UsernameInput } = useInputValidations();
 
   return (
