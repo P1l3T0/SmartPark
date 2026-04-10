@@ -7,10 +7,31 @@ interface Base {
 
 // Auth
 
+export interface AuthState {
+  username?: string;
+  accessToken?: string;
+  refreshToken?: string;
+}
+
+// #region Context
+
+export interface AuthContextType {
+  auth: AuthState;
+  isUserLoggedIn: boolean;
+  setAuth: React.Dispatch<React.SetStateAction<AuthState>>;
+  login: () => void;
+  logout: () => void;
+}
+
 export interface UserRequest {
   email: string;
-  username: string;
+  username?: string;
   password: string;
+}
+
+export interface VerificationRequest {
+  email: string;
+  verificationCode?: string;
 }
 
 export interface UserResponse extends Base {

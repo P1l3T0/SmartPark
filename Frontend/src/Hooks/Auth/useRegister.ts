@@ -1,16 +1,13 @@
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { registerEndPoint } from "../../Utils/endpoints";
 import type { UserRequest } from "../../Utils/interfaces";
 import type { TextBoxChangeEvent } from "@progress/kendo-react-inputs";
-//import useAuth from "../../Context/Auth/useAuth";
 
 const useRegister = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  //const { login } = useAuth();
 
   const [user, setUser] = useState<UserRequest>({
     email: "",
@@ -28,23 +25,16 @@ const useRegister = () => {
   };
 
   const registerUser = async () => {
-  const existing = localStorage.getItem("user");
-  if (existing) {
-    localStorage.removeItem("user");
-  }
-  localStorage.setItem("user", JSON.stringify(user));
-    navigate("/home");
-    //await axios
-    //  .post(registerEndPoint, user, { withCredentials: true })
-    //  .then(() => {
-    //    //login();
-    //    navigate("/home");
-    //    queryClient.invalidateQueries({ queryKey: ["user"] });
-    //  })
-    //  .catch((err: AxiosError) => {
-    //    const error = err.response?.data as { title?: string };
-    //    alert(error?.title);
-    //  });
+    await axios
+      .post(registerEndPoint, user)
+      .then(() => {
+        localStorage.setItem("email", user.email);
+        navigate("/verify");
+      })
+      .catch((err: AxiosError) => {
+        const error = err.response?.data as { title?: string };
+        alert(error?.title);
+      });
   };
 
   const { mutateAsync } = useMutation({
