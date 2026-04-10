@@ -1,5 +1,7 @@
 package com.example.SmartParkBackend.Controller;
 
+import com.example.SmartParkBackend.DTO.Request.EmailDto;
+import com.example.SmartParkBackend.DTO.Request.ResendCodeDto;
 import com.example.SmartParkBackend.DTO.Request.VerifyUserDto;
 import com.example.SmartParkBackend.Service.VerificationService;
 import org.springframework.http.HttpStatus;
@@ -18,7 +20,7 @@ public class VerificationController {
     @PostMapping("verify")
     public ResponseEntity<?> verifyUser(@RequestBody VerifyUserDto verifyUserDto) {
         try {
-            verificationService.verifyUser(verifyUserDto);
+            verificationService.verifyUser(verifyUserDto).join();
             return ResponseEntity.ok("Account Verified Successfully");
         } catch (RuntimeException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
@@ -26,9 +28,9 @@ public class VerificationController {
     }
 
     @PostMapping("resend")
-    public ResponseEntity<?> resendCode(@RequestBody String email) {
+    public ResponseEntity<?> resendCode(@RequestBody EmailDto emailDto) {
         try {
-            verificationService.resendVerificationCode(email);
+            verificationService.resendVerificationCode(emailDto.getEmail()).join();
             return ResponseEntity.ok("Verification Code Sent");
         } catch (RuntimeException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());

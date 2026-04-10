@@ -9,6 +9,7 @@ import jakarta.mail.MessagingException;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
@@ -35,12 +36,12 @@ public class VerificationServiceImpl implements VerificationService {
 
         User user = optionalUser.get();
 
-        if (user.getVerificationCodeExpiresAt().isBefore(LocalDateTime.now())) {
+        if (user.getVerificationCodeExpiresAt() != null && user.getVerificationCodeExpiresAt().isBefore(LocalDateTime.now())) {
             throw new RuntimeException("Verification code expired");
         }
 
         if (!user.getVerificationCode().equals(verifyUserDto.getVerificationCode())) {
-            throw new RuntimeException("Verification code not match");
+            throw new RuntimeException("Verification code does not match");
         }
 
         user.setEnabled(true);
@@ -75,7 +76,8 @@ public class VerificationServiceImpl implements VerificationService {
         return CompletableFuture.completedFuture(null);
     }
 
-    private void sendVerificationEmail(User user) {
+    @Override
+    public void sendVerificationEmail(User user) {
         String subject = "Account Verification";
         String verificationCode = user.getVerificationCode();
         String message = "<html>"
@@ -99,7 +101,7 @@ public class VerificationServiceImpl implements VerificationService {
     }
 
     private String generateVerificationCode() {
-        Random random = new Random();
+        SecureRandom random = new SecureRandom();
         int code = random.nextInt(900000) + 100000;
         return String.valueOf(code);
     }

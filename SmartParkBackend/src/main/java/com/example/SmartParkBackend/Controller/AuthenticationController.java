@@ -28,7 +28,7 @@ public class AuthenticationController {
     public ResponseEntity<?> register(@RequestBody RegisterDto registerDto) {
         try {
             validationService.validateRegistration(registerDto);
-            authService.register(registerDto);
+            authService.register(registerDto).join();
             return ResponseEntity.ok("Register successfully");
         } catch (RuntimeException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());

@@ -21,7 +21,7 @@ public class RefreshTokenController {
     @PostMapping("refresh")
     public ResponseEntity<?> refresh(HttpServletRequest request) {
         try {
-            LoginResponseDto loginResponse = tokenRefreshService.refresh(request);
+            LoginResponseDto loginResponse = tokenRefreshService.renew(request);
             return ResponseEntity.ok(loginResponse);
         } catch (RuntimeException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());

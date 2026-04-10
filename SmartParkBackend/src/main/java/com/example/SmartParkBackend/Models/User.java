@@ -22,10 +22,10 @@ public class User extends BaseModel implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "verifcationCode")
+    @Column(name = "verifi  cationCode")
     private String verificationCode;
 
-    @Column(name = "verifcationExpiration")
+    @Column(name = "verificationExpiration")
     private LocalDateTime verificationCodeExpiresAt;
 
     @Column(name = "enabled")

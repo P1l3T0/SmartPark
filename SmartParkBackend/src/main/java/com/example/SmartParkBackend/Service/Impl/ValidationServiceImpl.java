@@ -35,6 +35,10 @@ public class ValidationServiceImpl implements ValidationService {
         if (userRepo.findByEmail(registerDto.getEmail()).isPresent()) {
             throw new UserAlreadyExistsException("A user with this email already exists");
         }
+
+        if (userRepo.findByUsername(registerDto.getUsername()).isPresent()) {
+            throw new UserAlreadyExistsException("A user with this username already exists");
+        }
     }
 
     private boolean isEmailValid(String email) {

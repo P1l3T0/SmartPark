@@ -19,7 +19,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     }
 
     @Override
-    public LoginResponseDto refresh(HttpServletRequest request) {
+    public LoginResponseDto renew(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {

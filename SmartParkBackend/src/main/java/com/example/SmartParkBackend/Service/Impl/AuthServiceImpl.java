@@ -5,6 +5,7 @@ import com.example.SmartParkBackend.DTO.Request.RegisterDto;
 import com.example.SmartParkBackend.Models.User;
 import com.example.SmartParkBackend.Repo.UserRepo;
 import com.example.SmartParkBackend.Service.AuthService;
+import com.example.SmartParkBackend.Service.EmailService;
 import com.example.SmartParkBackend.Service.VerificationService;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -48,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
         user.setEnabled(false);
 
         userRepo.save(user);
-        verificationService.resendVerificationCode(user.getEmail());
+        verificationService.sendVerificationEmail(user);
         return CompletableFuture.completedFuture(null);
     }
 
