@@ -1,5 +1,6 @@
 package com.example.SmartParkBackend.Controller;
 
+import com.example.SmartParkBackend.DTO.Response.LoginResponseDto;
 import com.example.SmartParkBackend.Service.RefreshTokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,8 @@ public class RefreshTokenController {
     @PostMapping("refresh")
     public ResponseEntity<?> refresh(HttpServletRequest request) {
         try {
-            return ResponseEntity.ok(tokenRefreshService.refresh(request));
+            LoginResponseDto loginResponse = tokenRefreshService.refresh(request);
+            return ResponseEntity.ok(loginResponse);
         } catch (RuntimeException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
         }
