@@ -3,7 +3,7 @@ import type { FormRenderProps } from "@progress/kendo-react-form";
 import { Link } from "react-router-dom";
 
 interface FormButtonProps {
-  to: string;
+  to?: string;
   text: string;
   formRenderProps: FormRenderProps;
 }
@@ -11,14 +11,14 @@ interface FormButtonProps {
 const FormButton = ({ formRenderProps, to, text }: FormButtonProps) => {
   return (
     <>
-      <div className="mt-10">
-        <Button
-          themeColor={"primary"}
-          className="w-full mb-5"
-          disabled={!formRenderProps.allowSubmit}
-        >
-          {text}
-        </Button>
+      <Button
+        themeColor={"primary"}
+        className={`w-full my-6 ${to ? "" : "mb-2"}`}
+        disabled={!formRenderProps.allowSubmit}
+      >
+        {text}
+      </Button>
+      {to && (
         <p className="text-center text-sm text-text-secondary">
           {text === "Log In"
             ? "Don't have an account? "
@@ -30,7 +30,7 @@ const FormButton = ({ formRenderProps, to, text }: FormButtonProps) => {
             {text === "Log In" ? "Sign up" : "Log in"}
           </Link>
         </p>
-      </div>
+      )}
     </>
   );
 };

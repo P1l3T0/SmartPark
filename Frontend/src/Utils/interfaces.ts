@@ -31,7 +31,7 @@ export interface UserRequest {
 
 export interface VerificationRequest {
   email: string;
-  verificationCode: string;
+  verificationCode?: string;
 }
 
 export interface UserResponse extends Base {

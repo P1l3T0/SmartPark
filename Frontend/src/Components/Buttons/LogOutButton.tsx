@@ -1,4 +1,4 @@
-import useLogOut from "../../Hooks/Auth/useLogout";
+import useLogOut from "../../Hooks/Auth/useLogOut";
 import LinkButton from "./LinkButton";
 
 const LogOutButton = () => {

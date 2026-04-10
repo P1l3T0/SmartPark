@@ -3,6 +3,7 @@ import { Form, Field, FormElement, FieldWrapper, FormFieldSet } from "@progress/
 import useVerify from "../../../Hooks/Auth/useVerify";
 import useInputValidations from "../Form/useInputValidations";
 import FormButton from "../../Buttons/FormButton";
+import ResendVerificationCodeButton from "../../Buttons/ResendVerificationCodeButton";
 
 const VerificationForm = () => {
   const { handleChange, handleSubmit } = useVerify();
@@ -25,7 +26,8 @@ const VerificationForm = () => {
             </FieldWrapper>
           </FormFieldSet>
 
-          <FormButton to="/login" text="Verify" formRenderProps={formRenderProps} />
+          <FormButton text="Verify" formRenderProps={formRenderProps} />
+          <ResendVerificationCodeButton />
         </FormElement>
       )}
     />

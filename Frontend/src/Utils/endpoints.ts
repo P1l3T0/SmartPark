@@ -16,8 +16,11 @@ const userController: string = `${baseURL}/user`;
 // Auth
 export const loginEndPoint: string = `${authController}/login`;
 export const registerEndPoint: string = `${authController}/register`;
-export const refreshTokenEndPoint: string = `${refreshController}/refresh`;
+export const refreshTokenEndPoint: string = `${refreshController}/renew`;
+
+// Verification
 export const verifyEndPoint: string = `${verificationController}/verify`;
+export const resendVerificationCodeEndPoint: string = `${verificationController}/resend`;
 
 // User
 export const getCurrentUserEndPoint: string = `${userController}/get/current-user`;
