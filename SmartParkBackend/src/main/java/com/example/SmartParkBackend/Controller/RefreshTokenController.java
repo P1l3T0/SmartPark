@@ -1,7 +1,7 @@
 package com.example.SmartParkBackend.Controller;
 
 import com.example.SmartParkBackend.DTO.Response.LoginResponseDto;
-import com.example.SmartParkBackend.Service.RefreshTokenService;
+import com.example.SmartParkBackend.Service.JWT.RefreshTokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

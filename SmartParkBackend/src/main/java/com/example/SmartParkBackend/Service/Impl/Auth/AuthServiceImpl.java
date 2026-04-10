@@ -1,12 +1,11 @@
-package com.example.SmartParkBackend.Service.Impl;
+package com.example.SmartParkBackend.Service.Impl.Auth;
 
 import com.example.SmartParkBackend.DTO.Request.LoginDto;
 import com.example.SmartParkBackend.DTO.Request.RegisterDto;
 import com.example.SmartParkBackend.Models.User;
 import com.example.SmartParkBackend.Repo.UserRepo;
-import com.example.SmartParkBackend.Service.AuthService;
-import com.example.SmartParkBackend.Service.EmailService;
-import com.example.SmartParkBackend.Service.VerificationService;
+import com.example.SmartParkBackend.Service.Auth.AuthService;
+import com.example.SmartParkBackend.Service.Validation.VerificationService;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

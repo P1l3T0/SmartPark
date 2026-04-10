@@ -1,4 +1,4 @@
-package com.example.SmartParkBackend.Service;
+package com.example.SmartParkBackend.Service.Auth;
 
 import com.example.SmartParkBackend.DTO.Request.LoginDto;
 import com.example.SmartParkBackend.DTO.Request.RegisterDto;

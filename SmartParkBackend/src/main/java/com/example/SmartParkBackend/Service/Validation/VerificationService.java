@@ -1,4 +1,4 @@
-package com.example.SmartParkBackend.Service;
+package com.example.SmartParkBackend.Service.Validation;
 
 import com.example.SmartParkBackend.DTO.Request.VerifyUserDto;
 import com.example.SmartParkBackend.Models.User;

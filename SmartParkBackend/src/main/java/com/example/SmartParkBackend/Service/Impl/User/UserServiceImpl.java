@@ -1,7 +1,7 @@
-package com.example.SmartParkBackend.Service.Impl;
+package com.example.SmartParkBackend.Service.Impl.User;
 import com.example.SmartParkBackend.DTO.Response.UserResponseDto;
 import com.example.SmartParkBackend.Models.User;
-import com.example.SmartParkBackend.Service.UserService;
+import com.example.SmartParkBackend.Service.User.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 

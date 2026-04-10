@@ -1,4 +1,4 @@
-package com.example.SmartParkBackend.Service;
+package com.example.SmartParkBackend.Service.JWT;
 
 import com.example.SmartParkBackend.DTO.Response.LoginResponseDto;
 import jakarta.servlet.http.HttpServletRequest;

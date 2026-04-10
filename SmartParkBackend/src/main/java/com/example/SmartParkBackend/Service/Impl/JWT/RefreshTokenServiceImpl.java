@@ -1,8 +1,8 @@
-package com.example.SmartParkBackend.Service.Impl;
+package com.example.SmartParkBackend.Service.Impl.JWT;
 
 import com.example.SmartParkBackend.DTO.Response.LoginResponseDto;
-import com.example.SmartParkBackend.Service.JwtService;
-import com.example.SmartParkBackend.Service.RefreshTokenService;
+import com.example.SmartParkBackend.Service.JWT.JwtService;
+import com.example.SmartParkBackend.Service.JWT.RefreshTokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

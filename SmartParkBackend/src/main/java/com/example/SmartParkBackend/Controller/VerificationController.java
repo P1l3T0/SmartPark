@@ -1,8 +1,7 @@
 package com.example.SmartParkBackend.Controller;
 
-import com.example.SmartParkBackend.DTO.Request.EmailDto;
 import com.example.SmartParkBackend.DTO.Request.VerifyUserDto;
-import com.example.SmartParkBackend.Service.VerificationService;
+import com.example.SmartParkBackend.Service.Validation.VerificationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

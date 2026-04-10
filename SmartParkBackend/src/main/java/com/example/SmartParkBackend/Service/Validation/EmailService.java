@@ -1,4 +1,4 @@
-package com.example.SmartParkBackend.Service;
+package com.example.SmartParkBackend.Service.Validation;
 
 import jakarta.mail.MessagingException;
 

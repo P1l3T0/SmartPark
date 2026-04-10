@@ -1,7 +1,6 @@
-package com.example.SmartParkBackend.Service;
+package com.example.SmartParkBackend.Service.User;
 
 import com.example.SmartParkBackend.DTO.Response.UserResponseDto;
-import com.example.SmartParkBackend.Models.User;
 
 public interface UserService {
     int getCurrentUserId();

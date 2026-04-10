@@ -1,10 +1,10 @@
-package com.example.SmartParkBackend.Service.Impl;
+package com.example.SmartParkBackend.Service.Impl.Validation;
 
 import com.example.SmartParkBackend.DTO.Request.VerifyUserDto;
 import com.example.SmartParkBackend.Models.User;
 import com.example.SmartParkBackend.Repo.UserRepo;
-import com.example.SmartParkBackend.Service.EmailService;
-import com.example.SmartParkBackend.Service.VerificationService;
+import com.example.SmartParkBackend.Service.Validation.EmailService;
+import com.example.SmartParkBackend.Service.Validation.VerificationService;
 import jakarta.mail.MessagingException;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 
 @Service

@@ -1,4 +1,4 @@
-package com.example.SmartParkBackend.Service;
+package com.example.SmartParkBackend.Service.JWT;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.security.core.userdetails.UserDetails;

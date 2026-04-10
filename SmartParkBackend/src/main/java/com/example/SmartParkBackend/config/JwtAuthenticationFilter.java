@@ -1,6 +1,6 @@
 package com.example.SmartParkBackend.config;
 
-import com.example.SmartParkBackend.Service.JwtService;
+import com.example.SmartParkBackend.Service.JWT.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

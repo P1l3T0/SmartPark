@@ -1,10 +1,10 @@
-package com.example.SmartParkBackend.Service.Impl;
+package com.example.SmartParkBackend.Service.Impl.Validation;
 
 import com.example.SmartParkBackend.DTO.Request.RegisterDto;
 import com.example.SmartParkBackend.Exceptions.InvalidCredentialsException;
 import com.example.SmartParkBackend.Exceptions.UserAlreadyExistsException;
 import com.example.SmartParkBackend.Repo.UserRepo;
-import com.example.SmartParkBackend.Service.ValidationService;
+import com.example.SmartParkBackend.Service.Validation.ValidationService;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Pattern;
