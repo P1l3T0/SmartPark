@@ -15,10 +15,14 @@
 # ===================================================================
 
 ---
-# Conditionally disable springdoc on missing api-docs profile
 spring:
   config:
     import: optional:config/application-secret.yml
+---
+spring:
+  config:
+    activate:
+      on-profile: '!api-docs'
 springdoc:
   api-docs:
     enabled: false

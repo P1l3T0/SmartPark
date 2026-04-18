@@ -4,6 +4,7 @@
 /node/
 node_tmp/
 node_modules/
+target/
 npm-debug.log.*
 /.awcache/*
 /.cache-loader/*
@@ -122,6 +123,7 @@ Desktop.ini
 # Logs
 ######################
 *.log*
+src/main/resources/config/application-secret.yml
 
 ######################
 # Others
