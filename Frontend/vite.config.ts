@@ -10,5 +10,13 @@ export default defineConfig(({ mode }) => {
       "process.env.BACKEND_API_URL": JSON.stringify(env.BACKEND_API_URL),
     },
     plugins: [react(), tailwindcss()],
+    server: {
+      port: 9000,
+      proxy: {
+        '/api': 'http://localhost:8080',
+        '/management': 'http://localhost:8080',
+        '/v3/api-docs': 'http://localhost:8080',
+      },
+    },
   };
 });
