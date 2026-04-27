@@ -122,10 +122,12 @@ public class UserService {
         }
         newUser.setImageUrl(userDTO.getImageUrl());
         newUser.setLangKey(userDTO.getLangKey());
-        // new user is not active
-        newUser.setActivated(false);
+        // TODO Temporary: auto-activate newly registered users and skip activation key generation.
+        newUser.setActivated(true); // TODO switch to false when email activation fixed
+
+        // TODO Temporary disabled
         // new user gets registration key
-        newUser.setActivationKey(RandomUtil.generateActivationKey());
+        // newUser.setActivationKey(RandomUtil.generateActivationKey());
         Set<Authority> authorities = new HashSet<>();
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
