@@ -1,4 +1,4 @@
-import useGetUser from "../../Hooks/Home/useGetUser";
+import useGetUser from "../../Hooks/User/useGetUser";
 import { Card, CardBody } from "@progress/kendo-react-layout";
 import { ErrorComponent, LoaderComponent } from "../Common/States";
 
@@ -23,7 +23,7 @@ const HomeContainer = () => {
                   <br />
                   Email: {user.email}
                   <br />
-                  Member since: {new Date(user.createdDate).toLocaleDateString()}
+                  Member since: {user.createdDate.toLocaleDateString()}
                 </p>
               </div>
             </CardBody>

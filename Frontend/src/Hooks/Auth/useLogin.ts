@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { loginEndPoint } from "../../Utils/endpoints";
-import type { LoginRequest, LoginResponse } from "../../Utils/interfaces";
+import type { CustomError, LoginRequest, LoginResponse } from "../../Utils/interfaces";
 import type { CheckboxChangeEvent, TextBoxChangeEvent } from "@progress/kendo-react-inputs";
 import useAuth from "../../Context/Auth/useAuth";
 import useRefreshToken from "./useRefreshToken";
@@ -14,11 +14,18 @@ const useLogin = () => {
   const { login, setAuth } = useAuth();
   const { scheduleRefresh } = useRefreshToken();
 
+  const [visible, setVisible] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+
   const [user, setUser] = useState<LoginRequest>({
     username: "",
     password: "",
     rememberMe: false,
   });
+
+  const toggleDialog = () => {
+    setVisible((prev) => !prev);
+  };
 
   const handleChange = (e: TextBoxChangeEvent | CheckboxChangeEvent) => {
     const { name, value } = e.target;
@@ -46,8 +53,9 @@ const useLogin = () => {
         queryClient.invalidateQueries({ queryKey: ["user"] });
       })
       .catch((err: AxiosError) => {
-        const error = err.response?.data as { title?: string };
-        alert(error?.title);
+        const error: CustomError = err.response?.data as CustomError;
+        setError(error.detail || "An error occurred");
+        toggleDialog();
       });
   };
 
@@ -57,7 +65,7 @@ const useLogin = () => {
 
   const handleSubmit = async () => mutateAsync();
 
-  return { handleChange, handleSubmit };
+  return { handleChange, handleSubmit, visible, error, toggleDialog };
 };
 
 export default useLogin;

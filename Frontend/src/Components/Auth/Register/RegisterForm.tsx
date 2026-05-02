@@ -3,9 +3,10 @@ import { Form, Field, FormElement, FieldWrapper, FormFieldSet } from "@progress/
 import useRegister from "../../../Hooks/Auth/useRegister";
 import useInputValidations from "../Form/useInputValidations";
 import FormButton from "../../Buttons/FormButton";
+import ErrorDialog from "../../Common/ErrorDialog";
 
 const RegisterForm = () => {
-  const { handleSubmit, handleChange } = useRegister();
+  const { handleSubmit, handleChange, visible, error, toggleDialog } = useRegister();
   const {
     emailValidator,
     EmailInput,
@@ -33,6 +34,16 @@ const RegisterForm = () => {
             </FieldWrapper>
             <FieldWrapper>
               <Field
+                id={"email"}
+                name={"email"}
+                type={"email"}
+                component={EmailInput}
+                validator={emailValidator}
+                onChange={handleChange}
+              />
+            </FieldWrapper>
+            <FieldWrapper>
+              <Field
                 id={"firstName"}
                 name={"firstName"}
                 component={FirstNameInput}
@@ -49,16 +60,6 @@ const RegisterForm = () => {
             </FieldWrapper>
             <FieldWrapper>
               <Field
-                id={"email"}
-                name={"email"}
-                type={"email"}
-                component={EmailInput}
-                validator={emailValidator}
-                onChange={handleChange}
-              />
-            </FieldWrapper>
-            <FieldWrapper>
-              <Field
                 id={"password"}
                 name={"password"}
                 type={"password"}
@@ -70,6 +71,7 @@ const RegisterForm = () => {
           </FormFieldSet>
 
           <FormButton to="/login" text="Create Account" formRenderProps={formRenderProps} />
+          <ErrorDialog visible={visible} error={error} toggleDialog={toggleDialog} />
         </FormElement>
       )}
     />

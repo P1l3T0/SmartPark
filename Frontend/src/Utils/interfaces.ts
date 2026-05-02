@@ -5,6 +5,16 @@ interface Base {
   dateCreated: Date;
 }
 
+export interface CustomError {
+  detail: string;
+  instance: string;
+  status: number;
+  title: string;
+  type: string;
+  message: string;
+  path: "/api/authenticate"
+}
+
 // Auth
 
 export interface AuthState {
@@ -61,9 +71,9 @@ export interface UserResponse {
   activated: boolean;
   langKey: string;
   createdBy: string;
-  createdDate: string;
+  createdDate: Date;
   lastModifiedBy: string;
-  lastModifiedDate: string;
+  lastModifiedDate: Date;
   authorities: string[];
 }
 

@@ -3,9 +3,10 @@ import { Form, Field, FormElement, FieldWrapper, FormFieldSet } from "@progress/
 import FormButton from "../../Buttons/FormButton";
 import useInputValidations from "../Form/useInputValidations";
 import useLogin from "../../../Hooks/Auth/useLogin";
+import ErrorDialog from "../../Common/ErrorDialog";
 
 const LoginForm = () => {
-  const { handleSubmit, handleChange } = useLogin();
+  const { handleSubmit, handleChange, visible, error, toggleDialog } = useLogin();
   const { UsernameInput, passwordValidator, PasswordInput, RememberMeInput } = useInputValidations();
 
   return (
@@ -48,6 +49,7 @@ const LoginForm = () => {
             </FormFieldSet>
 
             <FormButton to="/register" text="Log In" formRenderProps={formRenderProps} />
+            <ErrorDialog visible={visible} error={error} toggleDialog={toggleDialog} />
           </FormElement>
         )}
       />

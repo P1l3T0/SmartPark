@@ -8,7 +8,13 @@ const useGetUser = () => {
   const getUser = async (): Promise<UserResponse | void> => {
     return await api
       .get<UserResponse>(getCurrentUserEndPoint)
-      .then((res: AxiosResponse<UserResponse>) => res.data)
+      .then((res: AxiosResponse<UserResponse>) => {
+        return {
+          ...res.data,
+          createdDate: new Date(res.data.createdDate),
+          lastModifiedDate: new Date(res.data.lastModifiedDate)
+        };
+      })
       .catch((err: AxiosError) => {
         console.error(err);
       });
