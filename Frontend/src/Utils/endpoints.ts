@@ -8,6 +8,8 @@ const baseURL: string = (() => {
       })();
 })();
 
+const vehicleController: string = `${baseURL}/vehicle`;
+
 // Auth
 export const loginEndPoint: string = `${baseURL}/authenticate`;
 export const registerEndPoint: string = `${baseURL}/register`;
@@ -19,3 +21,9 @@ export const changePasswordEndPoint: string = `${baseURL}/account/change-passwor
 export const resetPasswordInitEndPoint: string = `${baseURL}/account/reset-password/init`;
 export const resetPasswordFinishEndPoint: string = `${baseURL}/account/reset-password/finish`;
 export const activateAccountEndPoint: string = `${baseURL}/activate`;
+
+// Vehicle
+export const createVehicleEndPoint: string = `${vehicleController}/create`;
+export const updateVehicleEndPoint: string = `${vehicleController}/update`;
+export const getUserVehiclesEndPoint: string = `${vehicleController}/get/user-vehicles`;
+export const deleteVehicleEndPoint: string = `${vehicleController}/delete`;

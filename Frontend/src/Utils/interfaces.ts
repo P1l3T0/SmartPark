@@ -74,6 +74,7 @@ export interface VehicleRequest {
   model: string;
   registrationNumber: string;
   isPrimary: boolean;
+  isUpdating?: boolean;
 }
 
 export interface VehicleResponse extends Base {
