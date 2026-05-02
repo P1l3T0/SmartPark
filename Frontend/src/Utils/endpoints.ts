@@ -8,19 +8,14 @@ const baseURL: string = (() => {
       })();
 })();
 
-const authController: string = `${baseURL}/auth`;
-const refreshController: string = `${baseURL}/refresh`;
-const verificationController: string = `${baseURL}/verification`;
-const userController: string = `${baseURL}/user`;
-
 // Auth
-export const loginEndPoint: string = `${authController}/login`;
-export const registerEndPoint: string = `${authController}/register`;
-export const refreshTokenEndPoint: string = `${refreshController}/renew`;
+export const loginEndPoint: string = `${baseURL}/authenticate`;
+export const registerEndPoint: string = `${baseURL}/register`;
+export const refreshTokenEndPoint: string = `${baseURL}/authenticate/refresh`;
 
-// Verification
-export const verifyEndPoint: string = `${verificationController}/verify`;
-export const resendVerificationCodeEndPoint: string = `${verificationController}/resend`;
-
-// User
-export const getCurrentUserEndPoint: string = `${userController}/get/current-user`;
+// Account
+export const getCurrentUserEndPoint: string = `${baseURL}/account`;
+export const changePasswordEndPoint: string = `${baseURL}/account/change-password`;
+export const resetPasswordInitEndPoint: string = `${baseURL}/account/reset-password/init`;
+export const resetPasswordFinishEndPoint: string = `${baseURL}/account/reset-password/finish`;
+export const activateAccountEndPoint: string = `${baseURL}/activate`;
