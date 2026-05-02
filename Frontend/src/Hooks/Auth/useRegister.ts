@@ -1,9 +1,9 @@
-import axios, { AxiosError, type AxiosResponse } from "axios";
+import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { registerEndPoint } from "../../Utils/endpoints";
-import type { CustomError, UserRequest, UserResponse } from "../../Utils/interfaces";
+import type { CustomError, UserRequest } from "../../Utils/interfaces";
 import type { TextBoxChangeEvent } from "@progress/kendo-react-inputs";
 
 const useRegister = () => {

@@ -2,7 +2,8 @@ import type { JSX } from "react/jsx-runtime";
 
 interface Base {
   id: number;
-  dateCreated: Date;
+  createdDate: Date;
+  lastModifiedDate: Date;
 }
 
 export interface CustomError {
@@ -36,7 +37,7 @@ export interface AuthContextType {
 export interface LoginRequest {
   username: string;
   password: string;
-  rememberMe?: boolean;
+  rememberMe: boolean;
 }
 
 export interface LoginResponse {
@@ -56,13 +57,7 @@ export interface UserRequest {
   authorities?: string[];
 }
 
-export interface VerificationRequest {
-  email: string;
-  verificationCode?: string;
-}
-
-export interface UserResponse {
-  id: number;
+export interface UserResponse extends Base {
   login: string;
   firstName: string;
   lastName: string;
@@ -71,9 +66,7 @@ export interface UserResponse {
   activated: boolean;
   langKey: string;
   createdBy: string;
-  createdDate: Date;
   lastModifiedBy: string;
-  lastModifiedDate: Date;
   authorities: string[];
 }
 

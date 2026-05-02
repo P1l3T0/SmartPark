@@ -11,7 +11,8 @@ const useGetUserVehicles = () => {
       .then((res: AxiosResponse<VehicleResponse[]>) => {
         return res.data.map((vehicle) => ({
           ...vehicle,
-          dateCreated: new Date(vehicle.dateCreated),
+          createdDate: new Date(vehicle.createdDate),
+          lastModifiedDate: new Date(vehicle.lastModifiedDate),
         }));
       })
       .catch((err: AxiosError) => {

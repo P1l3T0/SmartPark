@@ -23,7 +23,8 @@ const useGetParkingSpots = () => {
 
         spots.push({
           id: currentId,
-          dateCreated: new Date(),
+          createdDate: new Date(),
+          lastModifiedDate: new Date(),
           slotNumber: `${row}${col}`,
           occupiedBy: status === "Occupied" ? `User${currentId}` : status === "OccupiedByMe" ? "CB 1234 OB" : null,
           status,
