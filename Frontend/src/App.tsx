@@ -2,7 +2,6 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import NotFound from "./Pages/NotFound";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
-import Verify from "./Pages/Verify";
 import Home from "./Pages/Home";
 import ParkingSpots from "./Pages/ParkingSpots";
 import Vehicles from "./Pages/Vehicles";
@@ -25,7 +24,6 @@ function App() {
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/verify" element={<Verify />} />
             <Route
               path="/home"
               element={
