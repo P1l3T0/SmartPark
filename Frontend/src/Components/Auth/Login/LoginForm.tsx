@@ -6,7 +6,7 @@ import useLogin from "../../../Hooks/Auth/useLogin";
 
 const LoginForm = () => {
   const { handleSubmit, handleChange } = useLogin();
-  const { emailValidator, EmailInput, passwordValidator, PasswordInput } = useInputValidations();
+  const { UsernameInput, passwordValidator, PasswordInput, RememberMeInput } = useInputValidations();
 
   return (
     <>
@@ -18,11 +18,10 @@ const LoginForm = () => {
             <FormFieldSet className="space-y-4">
               <FieldWrapper>
                 <Field
-                  id={"email"}
-                  name={"email"}
-                  type={"email"}
-                  component={EmailInput}
-                  validator={emailValidator}
+                  id={"username"}
+                  name={"username"}
+                  type={"text"}
+                  component={UsernameInput}
                   onChange={handleChange}
                   className="w-full"
                 />
@@ -36,6 +35,14 @@ const LoginForm = () => {
                   validator={passwordValidator}
                   onChange={handleChange}
                   className="w-full"
+                />
+              </FieldWrapper>
+              <FieldWrapper>
+                <Field
+                  id={"rememberMe"}
+                  name={"rememberMe"}
+                  component={RememberMeInput}
+                  onChange={handleChange}
                 />
               </FieldWrapper>
             </FormFieldSet>

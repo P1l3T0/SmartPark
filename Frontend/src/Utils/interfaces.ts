@@ -23,10 +23,27 @@ export interface AuthContextType {
   logout: () => void;
 }
 
-export interface UserRequest {
-  email: string;
-  username?: string;
+export interface LoginRequest {
+  username: string;
   password: string;
+  rememberMe?: boolean;
+}
+
+export interface LoginResponse {
+  access_token: string;
+  refresh_token: string;
+}
+
+export interface UserRequest {
+  login: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  imageUrl?: string;
+  activated?: boolean;
+  langKey?: string;
+  authorities?: string[];
 }
 
 export interface VerificationRequest {
@@ -34,9 +51,20 @@ export interface VerificationRequest {
   verificationCode?: string;
 }
 
-export interface UserResponse extends Base {
+export interface UserResponse {
+  id: number;
+  login: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  username: string;
+  imageUrl: string;
+  activated: boolean;
+  langKey: string;
+  createdBy: string;
+  createdDate: string;
+  lastModifiedBy: string;
+  lastModifiedDate: string;
+  authorities: string[];
 }
 
 // Vehicle

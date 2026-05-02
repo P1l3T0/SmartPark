@@ -10,8 +10,10 @@ const useRegister = () => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState<UserRequest>({
+    login: "",
+    firstName: "",
+    lastName: "",
     email: "",
-    username: "",
     password: "",
   });
 
@@ -28,8 +30,7 @@ const useRegister = () => {
     await axios
       .post(registerEndPoint, user)
       .then(() => {
-        localStorage.setItem("email", user.email);
-        navigate("/verify");
+        navigate("/home");
       })
       .catch((err: AxiosError) => {
         const error = err.response?.data as { title?: string };
@@ -38,7 +39,7 @@ const useRegister = () => {
   };
 
   const { mutateAsync } = useMutation({
-    mutationFn: registerUser
+    mutationFn: registerUser,
   });
 
   const handleSubmit = async () => mutateAsync();

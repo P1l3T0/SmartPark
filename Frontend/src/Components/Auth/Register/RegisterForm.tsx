@@ -6,10 +6,18 @@ import FormButton from "../../Buttons/FormButton";
 
 const RegisterForm = () => {
   const { handleSubmit, handleChange } = useRegister();
-  const { emailValidator, EmailInput, passwordValidator, PasswordInput, UsernameInput } = useInputValidations();
+  const {
+    emailValidator,
+    EmailInput,
+    passwordValidator,
+    PasswordInput,
+    UsernameInput,
+    FirstNameInput,
+    LastNameInput,
+  } = useInputValidations();
 
   return (
-    <Form 
+    <Form
       id="register-form"
       onSubmit={handleSubmit}
       render={(formRenderProps: FormRenderProps) => (
@@ -17,9 +25,25 @@ const RegisterForm = () => {
           <FormFieldSet className="space-y-4">
             <FieldWrapper>
               <Field
-                id={"username"}
-                name={"username"}
+                id={"login"}
+                name={"login"}
                 component={UsernameInput}
+                onChange={handleChange}
+              />
+            </FieldWrapper>
+            <FieldWrapper>
+              <Field
+                id={"firstName"}
+                name={"firstName"}
+                component={FirstNameInput}
+                onChange={handleChange}
+              />
+            </FieldWrapper>
+            <FieldWrapper>
+              <Field
+                id={"lastName"}
+                name={"lastName"}
+                component={LastNameInput}
                 onChange={handleChange}
               />
             </FieldWrapper>
