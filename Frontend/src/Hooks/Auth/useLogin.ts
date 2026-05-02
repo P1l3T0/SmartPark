@@ -6,11 +6,13 @@ import { loginEndPoint } from "../../Utils/endpoints";
 import type { LoginRequest, LoginResponse } from "../../Utils/interfaces";
 import type { CheckboxChangeEvent, TextBoxChangeEvent } from "@progress/kendo-react-inputs";
 import useAuth from "../../Context/Auth/useAuth";
+import useRefreshToken from "./useRefreshToken";
 
 const useLogin = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { login, setAuth } = useAuth();
+  const { scheduleRefresh } = useRefreshToken();
 
   const [user, setUser] = useState<LoginRequest>({
     username: "",
@@ -37,7 +39,9 @@ const useLogin = () => {
           refreshToken: res.data.refresh_token,
         });
         document.cookie = `token=${res.data.access_token}; path=/;`;
+        document.cookie = `refresh_token=${res.data.refresh_token}; path=/;`;
         login();
+        scheduleRefresh(res.data.access_token);
         navigate("/home");
         queryClient.invalidateQueries({ queryKey: ["user"] });
       })
