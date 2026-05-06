@@ -28,6 +28,10 @@ const useDeleteVehicle = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user-vehicles"] });
     },
+    onError: (err: AxiosError) => {
+      setError((err.response?.data as string) || "An error occurred");
+      setVisible(true);
+    }
   });
 
   const handleClick = async (vehicleId: number) => {

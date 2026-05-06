@@ -55,7 +55,7 @@ const useLogin = () => {
       .catch((err: AxiosError) => {
         const error: CustomError = err.response?.data as CustomError;
         setError(error.detail || "An error occurred");
-        toggleDialog();
+        setVisible(true);
       });
   };
 

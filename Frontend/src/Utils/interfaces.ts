@@ -13,7 +13,7 @@ export interface CustomError {
   title: string;
   type: string;
   message: string;
-  path: "/api/authenticate"
+  path: string;
 }
 
 // Auth

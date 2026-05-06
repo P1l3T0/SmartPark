@@ -17,7 +17,7 @@ const VehicleItem = ({ dataItem }: VehicleItemRenderProps) => {
   return (
     <div className="flex flex-col items-center gap-3 p-4 bg-card rounded-lg border border-border hover:shadow-md transition-all duration-200 h-full">
       <div
-        className={`h-1 w-full rounded-full ${dataItem.primary ? "bg-primary" : "bg-border"}`}
+        className={`h-1 w-full rounded-full ${dataItem.isPrimary ? "bg-primary" : "bg-border"}`}
       />
       <div className="flex items-center justify-center h-20">
         <BrandLogo brand={dataItem.brand} />
@@ -33,7 +33,7 @@ const VehicleItem = ({ dataItem }: VehicleItemRenderProps) => {
           size="small"
           className="font-mono tracking-widest uppercase"
         />
-        {dataItem.primary && (
+        {dataItem.isPrimary && (
           <Chip
             text="Primary"
             icon="star"

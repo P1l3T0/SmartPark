@@ -70,7 +70,7 @@ const useUpdateVehicle = (vehicle: VehicleResponse) => {
       )
       .catch((err: AxiosError) => {
         setError(err.response?.data as string || "An error occurred");
-        toggleErrorDialog();
+        setDialogVisible(true);
       });
   };
 
@@ -79,6 +79,10 @@ const useUpdateVehicle = (vehicle: VehicleResponse) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user-vehicles"] });
     },
+    onError: (err: AxiosError) => {
+      setError(err.response?.data as string || "An error occurred");
+      setDialogVisible(true);
+    }
   });
 
   const handleUpdate = async () => {

@@ -7,7 +7,6 @@ import ParkingSpots from "./Pages/ParkingSpots";
 import Vehicles from "./Pages/Vehicles";
 import Bookings from "./Pages/Bookings";
 import ProtectedRoute from "./Context/Auth/ProtectedRoute";
-import PersistLogin from "./Context/Auth/PersistLogin";
 import Navbar from "./Components/Common/Navbar";
 import useAuth from "./Context/Auth/useAuth";
 
@@ -19,7 +18,6 @@ function App() {
       <BrowserRouter>
       {isUserLoggedIn && <Navbar />}
         <Routes>
-          <Route element={<PersistLogin />}>
             <Route path="*" element={<NotFound />} />
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/login" element={<Login />} />
@@ -56,7 +54,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-          </Route>
         </Routes>
       </BrowserRouter>
     </>
