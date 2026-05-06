@@ -7,11 +7,12 @@ import type { UserResponse } from "../../Utils/interfaces";
 const useGetUser = () => {
   const getUser = async (): Promise<UserResponse | void> => {
     return await api
-      .get<UserResponse>(`${getCurrentUserEndPoint}`, { withCredentials: true })
+      .get<UserResponse>(getCurrentUserEndPoint)
       .then((res: AxiosResponse<UserResponse>) => {
         return {
           ...res.data,
-          dateCreated: new Date(res.data.dateCreated),
+          createdDate: new Date(res.data.createdDate),
+          lastModifiedDate: new Date(res.data.lastModifiedDate)
         };
       })
       .catch((err: AxiosError) => {

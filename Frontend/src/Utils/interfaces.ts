@@ -2,7 +2,18 @@ import type { JSX } from "react/jsx-runtime";
 
 interface Base {
   id: number;
-  dateCreated: Date;
+  createdDate: Date;
+  lastModifiedDate: Date;
+}
+
+export interface CustomError {
+  detail: string;
+  instance: string;
+  status: number;
+  title: string;
+  type: string;
+  message: string;
+  path: string;
 }
 
 // Auth
@@ -23,20 +34,40 @@ export interface AuthContextType {
   logout: () => void;
 }
 
-export interface UserRequest {
-  email: string;
-  username?: string;
+export interface LoginRequest {
+  username: string;
   password: string;
+  rememberMe: boolean;
 }
 
-export interface VerificationRequest {
+export interface LoginResponse {
+  access_token: string;
+  refresh_token: string;
+}
+
+export interface UserRequest {
+  login: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  verificationCode?: string;
+  password: string;
+  imageUrl?: string;
+  activated?: boolean;
+  langKey?: string;
+  authorities?: string[];
 }
 
 export interface UserResponse extends Base {
+  login: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  username: string;
+  imageUrl: string;
+  activated: boolean;
+  langKey: string;
+  createdBy: string;
+  lastModifiedBy: string;
+  authorities: string[];
 }
 
 // Vehicle
@@ -46,6 +77,7 @@ export interface VehicleRequest {
   model: string;
   registrationNumber: string;
   isPrimary: boolean;
+  isUpdating?: boolean;
 }
 
 export interface VehicleResponse extends Base {
