@@ -11,7 +11,6 @@ const ParkingGrid = () => {
   const { data: vehicles } = useGetUserVehicles();
   const {
     visible,
-    error: reserveError,
     reservation,
     toggleDialog,
     openReservationWindow,
@@ -81,9 +80,6 @@ const ParkingGrid = () => {
       )}
 
       <ErrorDialog visible={cancelErrorVisible} error={cancelError} toggleDialog={toggleCancelErrorDialog} />
-      {reserveError && !visible && (
-        <ErrorDialog visible={!!reserveError} error={reserveError} toggleDialog={toggleDialog} />
-      )}
     </div>
   );
 } 

@@ -8,7 +8,7 @@ const useGetParkingSpots = () => {
   const ROWS = ["A", "B", "C", "D"];
   const COLS = [1, 2, 3, 4, 5, 6];
 
-  const getParkingSpots = async (): Promise<ParkingSpotResponse[] | void> => {
+  const getParkingSpots = async (): Promise<ParkingSpotResponse[]> => {
     return await api
       .get<ParkingSpotResponse[]>(`${getParkingSpotsEndPoint}`, { withCredentials: true })
       .then((res: AxiosResponse<ParkingSpotResponse[]>) => {

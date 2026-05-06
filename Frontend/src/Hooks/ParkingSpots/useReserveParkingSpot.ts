@@ -16,7 +16,7 @@ const useReserveParkingSpot = () => {
     parkingSpotId: 0,
     vehicleRegistrationNumber: "",
     startTime: new Date(),
-    endTime: new Date(),
+    endTime: new Date(Date.now() + 60 * 60 * 1000),
   });
 
   const toggleDialog = () => {

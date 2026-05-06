@@ -12,6 +12,9 @@ const useCancelReservation = () => {
 
   const toggleDialog = () => {
     setVisible((prev) => !prev);
+    if (visible) {
+      setError("");
+    }
   };
 
   const cancelReservation = async (parkingSpotId: number) => {

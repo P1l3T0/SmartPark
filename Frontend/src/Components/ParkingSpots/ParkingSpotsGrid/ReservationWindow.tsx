@@ -34,7 +34,7 @@ const ReservationWindow = ({
               id="vehicleRegistrationNumber"
               name="vehicleRegistrationNumber"
               data={vehicleRegistrationNumbers}
-              defaultValue={reservation.vehicleRegistrationNumber || undefined}
+              value={reservation.vehicleRegistrationNumber || undefined}
               onChange={handleDropDownChange}
             />
           </div>
@@ -43,7 +43,7 @@ const ReservationWindow = ({
             <DateTimePicker
               id="startTime"
               name="startTime"
-              defaultValue={reservation.startTime}
+              value={reservation.startTime}
               onChange={handleStartTimeChange}
               format="dd/MM/yyyy HH:mm"
             />
@@ -53,7 +53,7 @@ const ReservationWindow = ({
             <DateTimePicker
               id="endTime"
               name="endTime"
-              defaultValue={reservation.endTime}
+              value={reservation.endTime}
               onChange={handleEndTimeChange}
               format="dd/MM/yyyy HH:mm"
             />
