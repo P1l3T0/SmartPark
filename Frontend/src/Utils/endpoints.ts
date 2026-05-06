@@ -9,6 +9,7 @@ const baseURL: string = (() => {
 })();
 
 const vehicleController: string = `${baseURL}/vehicle`;
+const parkingSpotController: string = `${baseURL}/parking-spot`;
 
 // Auth
 export const loginEndPoint: string = `${baseURL}/authenticate`;
@@ -27,3 +28,8 @@ export const createVehicleEndPoint: string = `${vehicleController}/create`;
 export const updateVehicleEndPoint: string = `${vehicleController}/update`;
 export const getUserVehiclesEndPoint: string = `${vehicleController}/get/user-vehicles`;
 export const deleteVehicleEndPoint: string = `${vehicleController}/delete`;
+
+// Parking Spot
+export const getParkingSpotsEndPoint: string = `${parkingSpotController}/get/all`;
+export const reserveParkingSpotEndPoint: string = `${parkingSpotController}/reserve`;
+export const cancelReservationEndPoint: string = `${parkingSpotController}/cancel`;

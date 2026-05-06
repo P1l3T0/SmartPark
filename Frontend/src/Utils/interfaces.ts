@@ -113,3 +113,10 @@ export interface ParkingSpotConfig {
   text?: string;
   dot?: string;
 }
+
+export interface ReserveParkingSpotRequest {
+  parkingSpotId: number;
+  vehicleRegistrationNumber: string;
+  startTime: Date;
+  endTime: Date;
+}

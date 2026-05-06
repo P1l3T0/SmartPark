@@ -5,14 +5,25 @@ interface ParkingSpotProps {
   slotNumber: string;
   occupiedBy: string | null;
   status: ParkingSpotStatus;
+  onAvailableClick: () => void;
+  onCancelClick: () => void;
 }
 
-const ParkingSpot = ({ slotNumber, occupiedBy, status }: ParkingSpotProps) => {
+const ParkingSpot = ({ slotNumber, occupiedBy, status, onAvailableClick, onCancelClick }: ParkingSpotProps) => {
   const config = statusConfig[status];
+
+  const handleClick = () => {
+    if (status === "Available") {
+      onAvailableClick();
+    } else if (status === "OccupiedByMe") {
+      onCancelClick();
+    }
+  };
 
   return (
     <div
       title={`${slotNumber}`}
+      onClick={handleClick}
       className={`flex flex-col items-center justify-between rounded-xl p-3 pt-2 cursor-pointer hover:scale-105 border-2 min-h-25 ${config.border} ${config.bg}`}
     >
       <div className="flex w-full justify-between items-center">
