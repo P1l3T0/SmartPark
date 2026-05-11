@@ -6,4 +6,6 @@ import java.util.List;
 public interface VehiclesService {
 
     List<VehicleDTO> findAllForCurrentUser();
+
+    void updateForCurrentUser(Long vehicleId, VehicleDTO vehicleDTO);
 }
