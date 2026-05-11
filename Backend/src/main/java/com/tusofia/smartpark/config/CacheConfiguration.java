@@ -35,6 +35,14 @@ public class CacheConfiguration {
             createCache(cm, com.tusofia.smartpark.repository.UserRepository.USERS_BY_LOGIN_CACHE);
             createCache(cm, com.tusofia.smartpark.repository.UserRepository.USERS_BY_EMAIL_CACHE);
             createCache(cm, com.tusofia.smartpark.domain.Authority.class.getName());
+            createCache(cm, com.tusofia.smartpark.domain.UserProfile.class.getName());
+            createCache(cm, com.tusofia.smartpark.domain.UserProfile.class.getName() + ".vehicleses");
+            createCache(cm, com.tusofia.smartpark.domain.UserProfile.class.getName() + ".bookingses");
+            createCache(cm, com.tusofia.smartpark.domain.Vehicle.class.getName());
+            createCache(cm, com.tusofia.smartpark.domain.Vehicle.class.getName() + ".bookingses");
+            createCache(cm, com.tusofia.smartpark.domain.ParkingSpot.class.getName());
+            createCache(cm, com.tusofia.smartpark.domain.ParkingSpot.class.getName() + ".bookingses");
+            createCache(cm, com.tusofia.smartpark.domain.Booking.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
