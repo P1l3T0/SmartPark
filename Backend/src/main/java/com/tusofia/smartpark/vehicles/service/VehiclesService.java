@@ -8,4 +8,6 @@ public interface VehiclesService {
     List<VehicleDTO> findAllForCurrentUser();
 
     void updateForCurrentUser(Long vehicleId, VehicleDTO vehicleDTO);
+
+    void deleteForCurrentUser(Long vehicleId);
 }

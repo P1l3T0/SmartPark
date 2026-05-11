@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +36,13 @@ public class VehiclesResource {
     public ResponseEntity<Void> updateVehicle(@PathVariable Long vehicleId, @RequestBody VehicleDTO vehicleDTO) {
         LOG.debug("REST request to update current user's Vehicle : {}", vehicleId);
         vehiclesService.updateForCurrentUser(vehicleId, vehicleDTO);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{vehicleId}")
+    public ResponseEntity<Void> deleteVehicle(@PathVariable Long vehicleId) {
+        LOG.debug("REST request to delete current user's Vehicle : {}", vehicleId);
+        vehiclesService.deleteForCurrentUser(vehicleId);
         return ResponseEntity.ok().build();
     }
 }

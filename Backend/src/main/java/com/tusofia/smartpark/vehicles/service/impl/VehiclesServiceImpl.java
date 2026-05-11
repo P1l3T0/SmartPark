@@ -59,6 +59,20 @@ public class VehiclesServiceImpl implements VehiclesService {
         vehiclesRepository.save(vehicle);
     }
 
+    @Override
+    @Transactional
+    public void deleteForCurrentUser(Long vehicleId) {
+        User currentUser = userService
+            .getUserWithAuthorities()
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Current user could not be found"));
+
+        Vehicle vehicle = vehiclesRepository
+            .findOneByIdAndOwnerUserId(vehicleId, currentUser.getId())
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Vehicle could not be found"));
+
+        vehiclesRepository.delete(vehicle);
+    }
+
     private VehicleDTO toDto(Vehicle vehicle) {
         return new VehicleDTO(
             vehicle.getId(),
