@@ -7,5 +7,5 @@ public record BookingDTO(
     String slotNumber,
     LocalDateTime startTime,
     LocalDateTime endTime,
-    boolean isCancelled
+    Boolean isCancelled
 ) {}

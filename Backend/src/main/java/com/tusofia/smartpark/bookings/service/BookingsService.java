@@ -6,4 +6,6 @@ import java.util.List;
 public interface BookingsService {
 
     List<BookingDTO> findAllForCurrentUser();
+
+    void createForCurrentUser(BookingDTO bookingDTO);
 }

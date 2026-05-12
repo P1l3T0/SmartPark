@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,5 +28,12 @@ public class BookingsResource {
     public ResponseEntity<List<BookingDTO>> getBookings() {
         LOG.debug("REST request to get current user's Bookings");
         return ResponseEntity.ok(bookingsService.findAllForCurrentUser());
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> createBooking(@RequestBody BookingDTO bookingDTO) {
+        LOG.debug("REST request to create Booking : {}", bookingDTO);
+        bookingsService.createForCurrentUser(bookingDTO);
+        return ResponseEntity.ok().build();
     }
 }
