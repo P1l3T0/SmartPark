@@ -83,6 +83,7 @@ public class SecurityConfiguration {
                     .requestMatchers("/management/prometheus").permitAll()
                     .requestMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers("/api/v1/vehicles/**").hasRole("USER")
+                    .requestMatchers("/api/v1/parking-spots/**").hasRole("USER")
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .exceptionHandling(exceptions ->

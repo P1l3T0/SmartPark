@@ -20,7 +20,8 @@ import tech.jhipster.config.h2.H2ConfigurationHelper;
 @EnableJpaRepositories(
     {
         "com.tusofia.smartpark.repository",
-        "com.tusofia.smartpark.vehicles.repository"
+        "com.tusofia.smartpark.vehicles.repository",
+        "com.tusofia.smartpark.spots.repository"
     })
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
