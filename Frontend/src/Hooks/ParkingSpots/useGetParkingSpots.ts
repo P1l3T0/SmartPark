@@ -1,41 +1,37 @@
-import { useState } from "react";
-import type { ParkingSpotResponse, ParkingSpotStatus} from "../../Utils/interfaces";
-
-const MY_SPOT_ID = 2;
+import { AxiosError, type AxiosResponse } from "axios";
+import api from "../../Utils/axiosInstance";
+import { useQuery } from "@tanstack/react-query";
+import { getParkingSpotsEndPoint } from "../../Utils/endpoints";
+import type { ParkingSpotResponse } from "../../Utils/interfaces";
 
 const useGetParkingSpots = () => {
   const ROWS = ["A", "B", "C", "D"];
   const COLS = [1, 2, 3, 4, 5, 6];
 
-  const [parkingSpots] = useState<ParkingSpotResponse[]>(() => {
-    let id = 1;
-    const spots: ParkingSpotResponse[] = [];
+  const getParkingSpots = async (): Promise<ParkingSpotResponse[]> => {
+    return await api
+      .get<ParkingSpotResponse[]>(`${getParkingSpotsEndPoint}`, { withCredentials: true })
+      .then((res: AxiosResponse<ParkingSpotResponse[]>) => {
+        return res.data.map((spot) => ({
+          ...spot,
+          createdDate: new Date(spot.createdDate),
+          lastModifiedDate: new Date(spot.lastModifiedDate),
+        }));
+      })
+      .catch((err: AxiosError) => {
+        console.error(err);
+        return [];
+      });
+  };
 
-    for (const row of ROWS) {
-      for (const col of COLS) {
-        const currentId = id++;
-        const status: ParkingSpotStatus =
-          currentId === MY_SPOT_ID
-            ? "OccupiedByMe"
-            : currentId % 2 === 0
-              ? "Available"
-              : "Occupied";
-
-        spots.push({
-          id: currentId,
-          createdDate: new Date(),
-          lastModifiedDate: new Date(),
-          slotNumber: `${row}${col}`,
-          occupiedBy: status === "Occupied" ? `User${currentId}` : status === "OccupiedByMe" ? "CB 1234 OB" : null,
-          status,
-        });
-      }
-    }
-
-    return spots;
+  const parkingSpotsQuery = useQuery({
+    queryKey: ["parking-spots"],
+    queryFn: getParkingSpots,
   });
 
-  return { COLS, ROWS, parkingSpots };
+  const { data: parkingSpots, isLoading, isError } = parkingSpotsQuery;
+
+  return { COLS, ROWS, parkingSpots: parkingSpots ?? [], isLoading, isError };
 };
 
 export default useGetParkingSpots;
