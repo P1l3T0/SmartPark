@@ -1,0 +1,49 @@
+entity UserProfile {
+  phoneNumber String maxlength(30)
+  photoUrl String maxlength(500)
+  dateCreated Instant required
+  dateUpdated Instant
+}
+
+entity Vehicle {
+  dateCreated Instant required
+  registrationNumber String required maxlength(20)
+  model String required maxlength(80)
+  brand String required maxlength(50)
+  isPrimary Boolean
+}
+
+entity ParkingSpot {
+  dateCreated Instant required
+  slotNumber String required maxlength(20)
+}
+
+entity Booking {
+  startDate Instant required
+  endDate Instant required
+  dateCreated Instant required
+  status BookingStatus required
+}
+
+enum BookingStatus {
+  CONFIRMED,
+  CANCELLED,
+  EXPIRED
+}
+
+relationship OneToOne {
+  UserProfile{user(login) required} to User with builtInEntity
+}
+
+relationship OneToMany {
+  UserProfile{vehicles} to Vehicle{owner required}
+  UserProfile{bookings} to Booking{userProfile required}
+  Vehicle{bookings} to Booking{vehicle required}
+  ParkingSpot{bookings} to Booking{parkingSpot required}
+}
+
+paginate UserProfile, Vehicle, ParkingSpot, Booking with pagination
+
+dto UserProfile, Vehicle, ParkingSpot, Booking with mapstruct
+
+service UserProfile, Vehicle, ParkingSpot, Booking with serviceImpl
