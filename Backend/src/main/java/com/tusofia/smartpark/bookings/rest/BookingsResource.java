@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,13 +28,20 @@ public class BookingsResource {
     @GetMapping
     public ResponseEntity<List<BookingDTO>> getBookings() {
         LOG.debug("REST request to get current user's Bookings");
-        return ResponseEntity.ok(bookingsService.findAllForCurrentUser());
+        return ResponseEntity.ok(bookingsService.findAllBookingsForUser());
     }
 
     @PostMapping
     public ResponseEntity<Void> createBooking(@RequestBody BookingDTO bookingDTO) {
         LOG.debug("REST request to create Booking : {}", bookingDTO);
-        bookingsService.createForCurrentUser(bookingDTO);
+        bookingsService.createBookingForUser(bookingDTO);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{bookingId}/cancel")
+    public ResponseEntity<Void> cancelBooking(@PathVariable Long bookingId) {
+        LOG.debug("REST request to cancel Booking : {}", bookingId);
+        bookingsService.cancelBookingForUser(bookingId);
         return ResponseEntity.ok().build();
     }
 }

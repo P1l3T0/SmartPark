@@ -32,6 +32,18 @@ public interface BookingsRepository extends JpaRepository<Booking, Long> {
 
     @Query(
         """
+        select booking
+        from Booking booking
+        join fetch booking.userProfile userProfile
+        join fetch userProfile.user user
+        where booking.id = :bookingId
+          and user.id = :userId
+        """
+    )
+    Optional<Booking> findOneByIdAndUserId(@Param("bookingId") Long bookingId, @Param("userId") Long userId);
+
+    @Query(
+        """
         select userProfile
         from UserProfile userProfile
         join fetch userProfile.user user

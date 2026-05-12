@@ -33,7 +33,7 @@ public class BookingsServiceImpl implements BookingsService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<BookingDTO> findAllForCurrentUser() {
+    public List<BookingDTO> findAllBookingsForUser() {
         User currentUser = userService
             .getUserWithAuthorities()
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Current user could not be found"));
@@ -43,7 +43,7 @@ public class BookingsServiceImpl implements BookingsService {
 
     @Override
     @Transactional
-    public void createForCurrentUser(BookingDTO bookingDTO) {
+    public void createBookingForUser(BookingDTO bookingDTO) {
         validateBookingRequest(bookingDTO);
 
         Instant startInstant = toInstant(bookingDTO.startTime());
@@ -85,6 +85,25 @@ public class BookingsServiceImpl implements BookingsService {
         bookingsRepository.save(booking);
     }
 
+    @Override
+    @Transactional
+    public void cancelBookingForUser(Long bookingId) {
+        if (bookingId == null) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "bookingId is required");
+        }
+
+        User currentUser = userService
+            .getUserWithAuthorities()
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Current user could not be found"));
+
+        Booking booking = bookingsRepository
+            .findOneByIdAndUserId(bookingId, currentUser.getId())
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Booking could not be found"));
+
+        booking.setStatus(BookingStatus.CANCELLED);
+        bookingsRepository.save(booking);
+    }
+
     private void validateBookingRequest(BookingDTO bookingDTO) {
         if (bookingDTO == null) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Booking request body is required");
@@ -108,6 +127,7 @@ public class BookingsServiceImpl implements BookingsService {
 
     private BookingDTO toDto(Booking booking) {
         return new BookingDTO(
+            booking.getId(),
             booking.getVehicle().getRegistrationNumber(),
             booking.getParkingSpot().getSlotNumber(),
             toLocalDateTime(booking.getStartDate()),
