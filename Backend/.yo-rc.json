@@ -15,7 +15,7 @@
     "devDatabaseType": "h2Disk",
     "enableHibernateCache": false,
     "enableTranslation": false,
-    "entities": [],
+    "entities": ["UserProfile", "Vehicle", "ParkingSpot", "Booking"],
     "feignClient": null,
     "jhipsterVersion": "9.0.0",
     "jwtSecretKey": "NWRlNDg3YzM2OGU4MWU4MWQwZWVmZGNjZGZlNWQxZDIxMGEzYmFjNjU0ZDM2NjI5NTA2YzU3MmYyMDdiYjkwN2FlNWY0MDdlZmI4ODFmMzhkMTAxYTUzMDIxOWY2MmZiMTg3Zjc1N2IwMzA1YzMxMGE5NmU2ZGJkN2Q3MmQ1NjU=",

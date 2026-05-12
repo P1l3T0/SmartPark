@@ -1,17 +1,12 @@
 import EmptyVehicles from "./NoVehicles";
 import VehicleItemRender from "./VehicleCard";
 import useChangeVehiclePage from "../../../../Hooks/Vehicles/useChangeVehiclePage";
+import type { VehicleResponse } from "../../../../Utils/interfaces";
 import { Pager } from "@progress/kendo-react-data-tools";
 import { Card, CardBody, CardFooter, CardHeader } from "@progress/kendo-react-layout";
-import useGetUserVehicles from "../../../../Hooks/Vehicles/useGetUserVehicles";
-import { ErrorComponent, LoaderComponent } from "../../../Common/States";
 
-const VehicleList = () => {
-  const { data: vehicles, isLoading, isError } = useGetUserVehicles();
-  const { skip, take, pagedData, handlePageChange } = useChangeVehiclePage(vehicles || []);
-
-  if (isLoading) return <LoaderComponent />;
-  if (isError) return <ErrorComponent />;
+const VehicleList = ({ vehicles }: { vehicles: VehicleResponse[] }) => {
+  const { skip, take, pagedData, handlePageChange } = useChangeVehiclePage(vehicles);
 
   return (
     <Card className="border border-border shadow-md">
@@ -20,7 +15,7 @@ const VehicleList = () => {
       </CardHeader>
       <CardBody>
         {vehicles && vehicles.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {pagedData.map((vehicle) => (
               <VehicleItemRender key={vehicle.id} dataItem={vehicle} />
             ))}

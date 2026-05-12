@@ -5,15 +5,13 @@ import useAuth from "../../Context/Auth/useAuth";
 const useLogOut = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { logout, setAuth } = useAuth();
+  const { logout } = useAuth();
 
   const logOutUser = () => {
-    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    document.cookie = "refresh_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    setAuth({});
-    queryClient.removeQueries({ queryKey: ["user"] });
     logout();
     navigate("/");
+    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    queryClient.removeQueries({ queryKey: ["user"] });
   };
 
   const handleLogOut = async () => logOutUser();

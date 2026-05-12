@@ -1,9 +1,7 @@
-import { Chip } from "@progress/kendo-react-buttons";
+import { Button, Chip } from "@progress/kendo-react-buttons";
 import { Label } from "@progress/kendo-react-labels";
 import type { VehicleResponse } from "../../../../Utils/interfaces";
 import BrandLogo from "./BrandLogo";
-import DeleteVehicleButton from "../../../Buttons/DeleteVehicleButton";
-import UpdateVehicleButton from "../../../Buttons/UpdateVehicleButton";
 
 interface VehicleItemRenderProps {
   dataItem: VehicleResponse;
@@ -14,11 +12,12 @@ const VehicleItemRender = (props: VehicleItemRenderProps) => {
 };
 
 const VehicleItem = ({ dataItem }: VehicleItemRenderProps) => {
+  const onEdit = () => console.log(`Edit vehicle with ID: ${dataItem.id}`);
+  const onDelete = () => console.log(`Delete vehicle with ID: ${dataItem.id}`);
+
   return (
     <div className="flex flex-col items-center gap-3 p-4 bg-card rounded-lg border border-border hover:shadow-md transition-all duration-200 h-full">
-      <div
-        className={`h-1 w-full rounded-full ${dataItem.isPrimary ? "bg-primary" : "bg-border"}`}
-      />
+      <div className={`h-1 w-full rounded-full ${dataItem.isPrimary ? "bg-primary" : "bg-border"}`} />
       <div className="flex items-center justify-center h-20">
         <BrandLogo brand={dataItem.brand} />
       </div>
@@ -45,8 +44,16 @@ const VehicleItem = ({ dataItem }: VehicleItemRenderProps) => {
         )}
       </div>
       <div className="flex gap-2 mt-auto w-full justify-end">
-        <UpdateVehicleButton vehicle={dataItem} />
-        <DeleteVehicleButton vehicle={dataItem} />
+        <Button
+          icon={"pencil"}
+          themeColor="primary"
+          onClick={onEdit}
+        />
+        <Button
+          icon={"trash"}
+          themeColor="error"
+          onClick={onDelete}
+        />
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import useGetUser from "../../Hooks/User/useGetUser";
+import useGetUser from "../../Hooks/Home/useGetUser";
 import { Card, CardBody } from "@progress/kendo-react-layout";
 import { ErrorComponent, LoaderComponent } from "../Common/States";
 
@@ -16,14 +16,14 @@ const HomeContainer = () => {
             <CardBody>
               <div className="text-center p-8">
                 <h2 className="text-2xl text-text-primary font-semibold mb-4">
-                  Welcome, {user.firstName} {user.lastName}!
+                  Welcome, {user.username}!
                 </h2>
                 <p className="text-text-secondary">
-                  Username: {user.login}
+                  ID: {user.id}
                   <br />
                   Email: {user.email}
                   <br />
-                  Member since: {user.createdDate.toLocaleDateString()}
+                  Date Joined: {user.dateCreated.toLocaleDateString()}
                 </p>
               </div>
             </CardBody>

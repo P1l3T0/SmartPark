@@ -1,32 +1,8 @@
 import useGetParkingSpots from "../../../Hooks/ParkingSpots/useGetParkingSpots";
-import useReserveParkingSpot from "../../../Hooks/ParkingSpots/useReserveParkingSpot";
-import useCancelReservation from "../../../Hooks/ParkingSpots/useCancelReservation";
-import useGetUserVehicles from "../../../Hooks/Vehicles/useGetUserVehicles";
 import ParkingSpot from "./ParkingSpot";
-import ReservationWindow from "./ReservationWindow";
-import ErrorDialog from "../../Common/ErrorDialog";
 
 const ParkingGrid = () => {
   const { COLS, ROWS, parkingSpots } = useGetParkingSpots();
-  const { data: vehicles } = useGetUserVehicles();
-  const {
-    visible,
-    reservation,
-    toggleDialog,
-    openReservationWindow,
-    handleDropDownChange,
-    handleStartTimeChange,
-    handleEndTimeChange,
-    handleSubmit,
-  } = useReserveParkingSpot();
-  const {
-    handleCancelReservation,
-    visible: cancelErrorVisible,
-    error: cancelError,
-    toggleDialog: toggleCancelErrorDialog,
-  } = useCancelReservation();
-
-  const vehicleRegistrationNumbers = vehicles?.map((v) => v.registrationNumber) ?? [];
 
   return (
     <div className="flex flex-col gap-3">
@@ -44,12 +20,7 @@ const ParkingGrid = () => {
 
             <div className="grid sm:grid-cols-3 lg:grid-cols-6 gap-3">
               {rowSpots.map((spot) => (
-                <ParkingSpot
-                  key={spot.id}
-                  {...spot}
-                  onAvailableClick={() => openReservationWindow(spot.id)}
-                  onCancelClick={() => handleCancelReservation(spot.id)}
-                />
+                <ParkingSpot key={spot.id} {...spot} />
               ))}
             </div>
 
@@ -66,20 +37,6 @@ const ParkingGrid = () => {
           </div>
         );
       })}
-
-      {visible && (
-        <ReservationWindow
-          reservation={reservation}
-          vehicleRegistrationNumbers={vehicleRegistrationNumbers}
-          toggleDialog={toggleDialog}
-          handleSubmit={handleSubmit}
-          handleDropDownChange={handleDropDownChange}
-          handleStartTimeChange={handleStartTimeChange}
-          handleEndTimeChange={handleEndTimeChange}
-        />
-      )}
-
-      <ErrorDialog visible={cancelErrorVisible} error={cancelError} toggleDialog={toggleCancelErrorDialog} />
     </div>
   );
 } 

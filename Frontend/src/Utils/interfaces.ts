@@ -2,18 +2,7 @@ import type { JSX } from "react/jsx-runtime";
 
 interface Base {
   id: number;
-  createdDate: Date;
-  lastModifiedDate: Date;
-}
-
-export interface CustomError {
-  detail: string;
-  instance: string;
-  status: number;
-  title: string;
-  type: string;
-  message: string;
-  path: string;
+  dateCreated: Date;
 }
 
 // Auth
@@ -34,40 +23,20 @@ export interface AuthContextType {
   logout: () => void;
 }
 
-export interface LoginRequest {
-  username: string;
-  password: string;
-  rememberMe: boolean;
-}
-
-export interface LoginResponse {
-  access_token: string;
-  refresh_token: string;
-}
-
 export interface UserRequest {
-  login: string;
-  firstName: string;
-  lastName: string;
   email: string;
+  username?: string;
   password: string;
-  imageUrl?: string;
-  activated?: boolean;
-  langKey?: string;
-  authorities?: string[];
+}
+
+export interface VerificationRequest {
+  email: string;
+  verificationCode?: string;
 }
 
 export interface UserResponse extends Base {
-  login: string;
-  firstName: string;
-  lastName: string;
   email: string;
-  imageUrl: string;
-  activated: boolean;
-  langKey: string;
-  createdBy: string;
-  lastModifiedBy: string;
-  authorities: string[];
+  username: string;
 }
 
 // Vehicle
@@ -77,7 +46,6 @@ export interface VehicleRequest {
   model: string;
   registrationNumber: string;
   isPrimary: boolean;
-  isUpdating?: boolean;
 }
 
 export interface VehicleResponse extends Base {
@@ -112,11 +80,4 @@ export interface ParkingSpotConfig {
   border?: string;
   text?: string;
   dot?: string;
-}
-
-export interface ReserveParkingSpotRequest {
-  parkingSpotId: number;
-  vehicleRegistrationNumber: string;
-  startTime: Date;
-  endTime: Date;
 }

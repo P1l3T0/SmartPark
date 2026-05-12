@@ -5,7 +5,7 @@ import type { VehicleResponse } from "../../Utils/interfaces";
 const useChangeVehiclePage = (vehicles: VehicleResponse[]) => {
   const [page, setPage] = useState({
     skip: 0,
-    take: 4,
+    take: 3,
   });
 
   const handlePageChange = (e: PageChangeEvent) => {

@@ -1,0 +1,33 @@
+{
+  "annotations": {
+    "changelogDate": "20260511183259"
+  },
+  "applications": ["*"],
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "dateCreated",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "slotNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "20"
+    }
+  ],
+  "name": "ParkingSpot",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "booking",
+      "otherEntityRelationshipName": "parkingSpot",
+      "relationshipName": "bookings",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

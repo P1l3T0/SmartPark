@@ -1,0 +1,60 @@
+{
+  "annotations": {
+    "changelogDate": "20260511183300"
+  },
+  "applications": ["*"],
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "startDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "endDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateCreated",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "BookingStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "CONFIRMED,CANCELLED,EXPIRED"
+    }
+  ],
+  "name": "Booking",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "userProfile",
+      "otherEntityRelationshipName": "bookings",
+      "relationshipName": "userProfile",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "vehicle",
+      "otherEntityRelationshipName": "bookings",
+      "relationshipName": "vehicle",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "parkingSpot",
+      "otherEntityRelationshipName": "bookings",
+      "relationshipName": "parkingSpot",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

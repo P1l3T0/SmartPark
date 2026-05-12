@@ -2,24 +2,17 @@ import { useRef } from "react";
 import useAuth from "../../Context/Auth/useAuth";
 import api from "../../Utils/axiosInstance";
 import { refreshTokenEndPoint } from "../../Utils/endpoints";
-import type { LoginResponse } from "../../Utils/interfaces";
 
 const REFRESH_BUFFER_MS = 10 * 1000; // refresh 10s before expiry
 
 const useRefreshToken = () => {
-  const { login, logout, setAuth } = useAuth();
+  const { login, logout } = useAuth();
   const tokenRefreshTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const getTokenFromCookie = (): string | undefined =>
     document.cookie
       .split("; ")
       .find((row) => row.startsWith("token="))
-      ?.split("=")[1];
-
-  const getRefreshTokenFromCookie = (): string | undefined =>
-    document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("refresh_token="))
       ?.split("=")[1];
 
   const getTokenExpiry = (token: string): number => {
@@ -40,31 +33,25 @@ const useRefreshToken = () => {
   };
 
   const refresh = async (): Promise<string | undefined> => {
-    const refreshToken = getRefreshTokenFromCookie();
-    if (!refreshToken) {
+    const currentToken = getTokenFromCookie();
+    if (!currentToken) {
       logout();
       return undefined;
     }
 
     try {
-      const response = await api.post<LoginResponse>(refreshTokenEndPoint, {
-        refresh_token: refreshToken,
+      const response = await api.post(refreshTokenEndPoint, null, {
+        headers: { 
+          Authorization: `Bearer ${currentToken}` 
+        }
       });
-      const { access_token, refresh_token } = response.data;
+      const { token, expiresIn } = response.data as { token: string; expiresIn: number };
 
-      document.cookie = `token=${access_token}; path=/;`;
-      document.cookie = `refresh_token=${refresh_token}; path=/;`;
-
-      setAuth((prev) => ({
-        ...prev,
-        accessToken: access_token,
-        refreshToken: refresh_token,
-      }));
-
+      document.cookie = `token=${token}; path=/;`;
       login();
-      scheduleRefresh(access_token);
+      scheduleRefresh(token);
 
-      return access_token;
+      return token;
     } catch {
       logout();
       return undefined;

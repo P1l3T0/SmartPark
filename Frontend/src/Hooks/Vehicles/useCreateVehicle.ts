@@ -1,27 +1,20 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { DropDownListChangeEvent } from "@progress/kendo-react-dropdowns";
-import type { VehicleRequest } from "../../Utils/interfaces";
+import type { VehicleResponse } from "../../Utils/interfaces";
 import type { TextBoxChangeEvent } from "@progress/kendo-react-inputs";
-import type { AxiosError } from "axios";
-import api from "../../Utils/axiosInstance";
-import { createVehicleEndPoint } from "../../Utils/endpoints";
 
-const useCreateVehicle = () => {
+const useCreateVehicle = (onVehicleAdded: () => void) => {
   const queryClient = useQueryClient();
 
-  const [visible, setVisible] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
-  const [vehicle, setVehicle] = useState<VehicleRequest>({
+  const [vehicle, setVehicle] = useState<VehicleResponse>({ // Change to VehiceleRequest when API is ready
+    id: 0,
+    dateCreated: new Date(),
     brand: "",
     model: "",
     registrationNumber: "",
     isPrimary: false,
   });
-
-  const toggleDialog = () => {
-    setVisible((prev) => !prev);
-  };
 
   const handleDropDownChange = (e: DropDownListChangeEvent) => {
     const name: string = e.target.props.name as string;
@@ -43,15 +36,25 @@ const useCreateVehicle = () => {
   };
 
   const createVehicle = async () => {
-    await api
-      .post(createVehicleEndPoint, vehicle, { withCredentials: true })
-      .then(() => {
-        queryClient.invalidateQueries({ queryKey: ["user-vehicles"] });
-      })
-      .catch((err: AxiosError) => {
-        setError((err.response?.data as string) || "An error occurred");
-        setVisible(true);
-      });
+    const existing = localStorage.getItem("vehicles");
+    const vehicles: VehicleResponse[] = existing ? JSON.parse(existing) : [];
+    vehicles.push({
+      ...vehicle,
+      id: vehicles.length + 1,
+    });
+    localStorage.setItem("vehicles", JSON.stringify(vehicles));
+    onVehicleAdded();
+
+    //await axios
+    //  .post(loginEndPoint, user, { withCredentials: true })
+    //  .then(() => {
+    //    navigate("/home");
+    //    queryClient.invalidateQueries({ queryKey: ["user"] });
+    //  })
+    //  .catch((err: AxiosError) => {
+    //    const error = err.response?.data as { title?: string };
+    //    alert(error?.title);
+    //  });
   };
 
   const { mutateAsync } = useMutation({
@@ -60,7 +63,7 @@ const useCreateVehicle = () => {
 
   const handleSubmit = async () => mutateAsync();
 
-  return { handleInputChange, handleDropDownChange, handleSubmit, visible, error, toggleDialog };
+  return { handleInputChange, handleDropDownChange, handleSubmit };
 };
 
 export default useCreateVehicle;
