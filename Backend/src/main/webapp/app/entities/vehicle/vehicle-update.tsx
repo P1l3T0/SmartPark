@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getEntities as getUserProfiles } from 'app/entities/user-profile/user-profile.reducer';
+import { VehicleStatus } from 'app/shared/model/enumerations/vehicle-status.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 
 import { createEntity, getEntity, reset, updateEntity } from './vehicle.reducer';
@@ -24,6 +25,7 @@ export const VehicleUpdate = () => {
   const loading = useAppSelector(state => state.vehicle.loading);
   const updating = useAppSelector(state => state.vehicle.updating);
   const updateSuccess = useAppSelector(state => state.vehicle.updateSuccess);
+  const vehicleStatusValues = Object.keys(VehicleStatus);
 
   const handleClose = () => {
     navigate(`/vehicle${location.search}`);
@@ -70,6 +72,7 @@ export const VehicleUpdate = () => {
           dateCreated: displayDefaultDateTime(),
         }
       : {
+          status: 'ACTIVE',
           ...vehicleEntity,
           dateCreated: convertDateTimeFromServer(vehicleEntity.dateCreated),
           owner: vehicleEntity?.owner?.id,
@@ -136,6 +139,13 @@ export const VehicleUpdate = () => {
                 }}
               />
               <ValidatedField label="Is Primary" id="vehicle-isPrimary" name="isPrimary" data-cy="isPrimary" check type="checkbox" />
+              <ValidatedField label="Status" id="vehicle-status" name="status" data-cy="status" type="select">
+                {vehicleStatusValues.map(vehicleStatus => (
+                  <option value={vehicleStatus} key={vehicleStatus}>
+                    {vehicleStatus}
+                  </option>
+                ))}
+              </ValidatedField>
               <ValidatedField id="vehicle-owner" name="owner" data-cy="owner" label="Owner" type="select" required>
                 <option value="" key="0" />
                 {userProfiles

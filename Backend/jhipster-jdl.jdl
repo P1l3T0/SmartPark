@@ -11,6 +11,12 @@ entity Vehicle {
   model String required maxlength(80)
   brand String required maxlength(50)
   isPrimary Boolean
+  status VehicleStatus required
+}
+
+enum VehicleStatus {
+  ACTIVE,
+  DISABLED
 }
 
 entity ParkingSpot {

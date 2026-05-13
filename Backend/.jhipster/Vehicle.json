@@ -31,6 +31,12 @@
     {
       "fieldName": "isPrimary",
       "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "VehicleStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "ACTIVE,DISABLED"
     }
   ],
   "name": "Vehicle",

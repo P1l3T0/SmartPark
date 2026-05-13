@@ -1,6 +1,7 @@
 package com.tusofia.smartpark.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.tusofia.smartpark.domain.enumeration.VehicleStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serial;
@@ -47,6 +48,11 @@ public class Vehicle implements Serializable {
 
     @Column(name = "is_primary")
     private Boolean isPrimary;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private VehicleStatus status;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "vehicle")
     @JsonIgnoreProperties(value = { "userProfile", "vehicle", "parkingSpot" }, allowSetters = true)
@@ -137,6 +143,19 @@ public class Vehicle implements Serializable {
         this.isPrimary = isPrimary;
     }
 
+    public VehicleStatus getStatus() {
+        return this.status;
+    }
+
+    public Vehicle status(VehicleStatus status) {
+        this.setStatus(status);
+        return this;
+    }
+
+    public void setStatus(VehicleStatus status) {
+        this.status = status;
+    }
+
     public Set<Booking> getBookingses() {
         return this.bookingses;
     }
@@ -210,6 +229,7 @@ public class Vehicle implements Serializable {
             ", model='" + getModel() + "'" +
             ", brand='" + getBrand() + "'" +
             ", isPrimary='" + getIsPrimary() + "'" +
+            ", status='" + getStatus() + "'" +
             "}";
     }
 }

@@ -53,7 +53,8 @@ public class VehicleAsserts {
             )
             .satisfies(a -> assertThat(a.getModel()).as("check model").isEqualTo(expected.getModel()))
             .satisfies(a -> assertThat(a.getBrand()).as("check brand").isEqualTo(expected.getBrand()))
-            .satisfies(a -> assertThat(a.getIsPrimary()).as("check isPrimary").isEqualTo(expected.getIsPrimary()));
+            .satisfies(a -> assertThat(a.getIsPrimary()).as("check isPrimary").isEqualTo(expected.getIsPrimary()))
+            .satisfies(a -> assertThat(a.getStatus()).as("check status").isEqualTo(expected.getStatus()));
     }
 
     /**
