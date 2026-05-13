@@ -25,7 +25,7 @@ public class ParkingSpotsResource {
         this.parkingSpotsService = parkingSpotsService;
     }
 
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<List<ParkingSpotDTO>> getParkingSpots(
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate

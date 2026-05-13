@@ -26,10 +26,17 @@ public class VehiclesResource {
         this.vehiclesService = vehiclesService;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<VehicleDTO> getVehicles() {
         LOG.debug("REST request to get current user's Vehicles");
         return vehiclesService.findAllForCurrentUser();
+    }
+
+    @PostMapping("")
+    public ResponseEntity<Void> createVehicle(@RequestBody VehicleDTO vehicleDTO) {
+        LOG.debug("REST request to create current user's Vehicle : {}", vehicleDTO);
+        vehiclesService.createForCurrentUser(vehicleDTO);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/{vehicleId}")
