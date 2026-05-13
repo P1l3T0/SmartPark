@@ -5,6 +5,7 @@ import com.tusofia.smartpark.domain.ParkingSpot;
 import com.tusofia.smartpark.domain.UserProfile;
 import com.tusofia.smartpark.domain.Vehicle;
 import com.tusofia.smartpark.domain.enumeration.BookingStatus;
+import com.tusofia.smartpark.domain.enumeration.VehicleStatus;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -60,11 +61,13 @@ public interface BookingsRepository extends JpaRepository<Booking, Long> {
         join fetch owner.user user
         where user.id = :userId
           and lower(vehicle.registrationNumber) = lower(:registrationNumber)
+          and vehicle.status = :status
         """
     )
     Optional<Vehicle> findVehicleByRegistrationNumberAndOwnerUserId(
         @Param("registrationNumber") String registrationNumber,
-        @Param("userId") Long userId
+        @Param("userId") Long userId,
+        @Param("status") VehicleStatus status
     );
 
     @Query("select parkingSpot from ParkingSpot parkingSpot where parkingSpot.slotNumber = :slotNumber")

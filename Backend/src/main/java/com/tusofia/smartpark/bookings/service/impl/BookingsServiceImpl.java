@@ -9,6 +9,7 @@ import com.tusofia.smartpark.domain.User;
 import com.tusofia.smartpark.domain.UserProfile;
 import com.tusofia.smartpark.domain.Vehicle;
 import com.tusofia.smartpark.domain.enumeration.BookingStatus;
+import com.tusofia.smartpark.domain.enumeration.VehicleStatus;
 import com.tusofia.smartpark.service.UserService;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -57,8 +58,8 @@ public class BookingsServiceImpl implements BookingsService {
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Current user profile could not be found"));
 
         Vehicle vehicle = bookingsRepository
-            .findVehicleByRegistrationNumberAndOwnerUserId(bookingDTO.vehicleRegistrationNumber(), currentUser.getId())
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Vehicle does not belong to current user"));
+            .findVehicleByRegistrationNumberAndOwnerUserId(bookingDTO.vehicleRegistrationNumber(), currentUser.getId(), VehicleStatus.ACTIVE)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Active vehicle does not belong to current user"));
 
         ParkingSpot parkingSpot = bookingsRepository
             .findOneParkingSpotBySlotNumber(bookingDTO.slotNumber())

@@ -2,6 +2,7 @@ package com.tusofia.smartpark.vehicles.service.impl;
 
 import com.tusofia.smartpark.domain.User;
 import com.tusofia.smartpark.domain.Vehicle;
+import com.tusofia.smartpark.domain.enumeration.VehicleStatus;
 import com.tusofia.smartpark.service.UserService;
 import com.tusofia.smartpark.vehicles.repository.VehiclesRepository;
 import com.tusofia.smartpark.vehicles.service.VehiclesService;
@@ -31,7 +32,7 @@ public class VehiclesServiceImpl implements VehiclesService {
             .getUserWithAuthorities()
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Current user could not be found"));
 
-        return vehiclesRepository.findAllByOwnerUserId(currentUser.getId()).stream().map(this::toDto).toList();
+        return vehiclesRepository.findAllByOwnerUserIdAndStatus(currentUser.getId(), VehicleStatus.ACTIVE).stream().map(this::toDto).toList();
     }
 
     @Override
@@ -70,7 +71,11 @@ public class VehiclesServiceImpl implements VehiclesService {
             .findOneByIdAndOwnerUserId(vehicleId, currentUser.getId())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Vehicle could not be found"));
 
-        vehiclesRepository.delete(vehicle);
+        vehicle.setStatus(VehicleStatus.DISABLED);
+        if (Boolean.TRUE.equals(vehicle.getIsPrimary())) {
+            vehicle.setIsPrimary(false);
+        }
+        vehiclesRepository.save(vehicle);
     }
 
     private VehicleDTO toDto(Vehicle vehicle) {
