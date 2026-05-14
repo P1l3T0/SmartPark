@@ -1,5 +1,6 @@
 package com.tusofia.smartpark.service.dto;
 
+import com.tusofia.smartpark.domain.enumeration.VehicleStatus;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
@@ -29,6 +30,9 @@ public class VehicleDTO implements Serializable {
     private String brand;
 
     private Boolean isPrimary;
+
+    @NotNull
+    private VehicleStatus status;
 
     @NotNull
     private UserProfileDTO owner;
@@ -81,6 +85,14 @@ public class VehicleDTO implements Serializable {
         this.isPrimary = isPrimary;
     }
 
+    public VehicleStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(VehicleStatus status) {
+        this.status = status;
+    }
+
     public UserProfileDTO getOwner() {
         return owner;
     }
@@ -120,6 +132,7 @@ public class VehicleDTO implements Serializable {
             ", model='" + getModel() + "'" +
             ", brand='" + getBrand() + "'" +
             ", isPrimary='" + getIsPrimary() + "'" +
+            ", status='" + getStatus() + "'" +
             ", owner=" + getOwner() +
             "}";
     }

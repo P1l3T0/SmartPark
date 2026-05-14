@@ -25,13 +25,13 @@ public class BookingsResource {
         this.bookingsService = bookingsService;
     }
 
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<List<BookingDTO>> getBookings() {
         LOG.debug("REST request to get current user's Bookings");
         return ResponseEntity.ok(bookingsService.findAllBookingsForUser());
     }
 
-    @PostMapping
+    @PostMapping("")
     public ResponseEntity<Void> createBooking(@RequestBody BookingDTO bookingDTO) {
         LOG.debug("REST request to create Booking : {}", bookingDTO);
         bookingsService.createBookingForUser(bookingDTO);

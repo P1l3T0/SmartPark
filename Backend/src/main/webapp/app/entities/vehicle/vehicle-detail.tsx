@@ -51,6 +51,10 @@ export const VehicleDetail = () => {
             <span id="isPrimary">Is Primary</span>
           </dt>
           <dd>{vehicleEntity.isPrimary ? 'true' : 'false'}</dd>
+          <dt>
+            <span id="status">Status</span>
+          </dt>
+          <dd>{vehicleEntity.status}</dd>
           <dt>Owner</dt>
           <dd>{vehicleEntity.owner ? vehicleEntity.owner.id : ''}</dd>
         </dl>

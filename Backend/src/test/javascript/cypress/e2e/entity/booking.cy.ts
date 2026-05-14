@@ -46,7 +46,7 @@ describe('Booking e2e test', () => {
     cy.authenticatedRequest({
       method: 'POST',
       url: '/api/vehicles',
-      body: {"dateCreated":"2026-05-10T20:45:05.172Z","registrationNumber":"recklessly gee uh-hu","model":"substantiate though likewise","brand":"super ick excepting","isPrimary":true},
+      body: {"dateCreated":"2026-05-10T20:45:05.172Z","registrationNumber":"recklessly gee uh-hu","model":"substantiate though likewise","brand":"super ick excepting","isPrimary":true,"status":"DISABLED"},
     }).then(({ body }) => {
       vehicle = body;
     });

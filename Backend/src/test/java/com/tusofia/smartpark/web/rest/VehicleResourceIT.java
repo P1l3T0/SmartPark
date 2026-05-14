@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tusofia.smartpark.IntegrationTest;
 import com.tusofia.smartpark.domain.UserProfile;
 import com.tusofia.smartpark.domain.Vehicle;
+import com.tusofia.smartpark.domain.enumeration.VehicleStatus;
 import com.tusofia.smartpark.repository.VehicleRepository;
 import com.tusofia.smartpark.service.dto.VehicleDTO;
 import com.tusofia.smartpark.service.mapper.VehicleMapper;
@@ -52,6 +53,9 @@ class VehicleResourceIT {
     private static final Boolean DEFAULT_IS_PRIMARY = false;
     private static final Boolean UPDATED_IS_PRIMARY = true;
 
+    private static final VehicleStatus DEFAULT_STATUS = VehicleStatus.ACTIVE;
+    private static final VehicleStatus UPDATED_STATUS = VehicleStatus.DISABLED;
+
     private static final String ENTITY_API_URL = "/api/vehicles";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -89,7 +93,8 @@ class VehicleResourceIT {
             .registrationNumber(DEFAULT_REGISTRATION_NUMBER)
             .model(DEFAULT_MODEL)
             .brand(DEFAULT_BRAND)
-            .isPrimary(DEFAULT_IS_PRIMARY);
+            .isPrimary(DEFAULT_IS_PRIMARY)
+            .status(DEFAULT_STATUS);
         // Add required entity
         UserProfile userProfile;
         if (TestUtil.findAll(em, UserProfile.class).isEmpty()) {
@@ -115,7 +120,8 @@ class VehicleResourceIT {
             .registrationNumber(UPDATED_REGISTRATION_NUMBER)
             .model(UPDATED_MODEL)
             .brand(UPDATED_BRAND)
-            .isPrimary(UPDATED_IS_PRIMARY);
+            .isPrimary(UPDATED_IS_PRIMARY)
+            .status(UPDATED_STATUS);
         // Add required entity
         UserProfile userProfile;
         if (TestUtil.findAll(em, UserProfile.class).isEmpty()) {
@@ -254,6 +260,23 @@ class VehicleResourceIT {
 
     @Test
     @Transactional
+    void checkStatusIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        vehicle.setStatus(null);
+
+        // Create the Vehicle, which fails.
+        VehicleDTO vehicleDTO = vehicleMapper.toDto(vehicle);
+
+        restVehicleMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(vehicleDTO)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllVehicles() throws Exception {
         // Initialize the database
         insertedVehicle = vehicleRepository.saveAndFlush(vehicle);
@@ -268,7 +291,8 @@ class VehicleResourceIT {
             .andExpect(jsonPath("$.[*].registrationNumber").value(hasItem(DEFAULT_REGISTRATION_NUMBER)))
             .andExpect(jsonPath("$.[*].model").value(hasItem(DEFAULT_MODEL)))
             .andExpect(jsonPath("$.[*].brand").value(hasItem(DEFAULT_BRAND)))
-            .andExpect(jsonPath("$.[*].isPrimary").value(hasItem(DEFAULT_IS_PRIMARY)));
+            .andExpect(jsonPath("$.[*].isPrimary").value(hasItem(DEFAULT_IS_PRIMARY)))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
 
     @Test
@@ -287,7 +311,8 @@ class VehicleResourceIT {
             .andExpect(jsonPath("$.registrationNumber").value(DEFAULT_REGISTRATION_NUMBER))
             .andExpect(jsonPath("$.model").value(DEFAULT_MODEL))
             .andExpect(jsonPath("$.brand").value(DEFAULT_BRAND))
-            .andExpect(jsonPath("$.isPrimary").value(DEFAULT_IS_PRIMARY));
+            .andExpect(jsonPath("$.isPrimary").value(DEFAULT_IS_PRIMARY))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
 
     @Test
@@ -314,7 +339,8 @@ class VehicleResourceIT {
             .registrationNumber(UPDATED_REGISTRATION_NUMBER)
             .model(UPDATED_MODEL)
             .brand(UPDATED_BRAND)
-            .isPrimary(UPDATED_IS_PRIMARY);
+            .isPrimary(UPDATED_IS_PRIMARY)
+            .status(UPDATED_STATUS);
         VehicleDTO vehicleDTO = vehicleMapper.toDto(updatedVehicle);
 
         restVehicleMockMvc
@@ -433,7 +459,8 @@ class VehicleResourceIT {
             .registrationNumber(UPDATED_REGISTRATION_NUMBER)
             .model(UPDATED_MODEL)
             .brand(UPDATED_BRAND)
-            .isPrimary(UPDATED_IS_PRIMARY);
+            .isPrimary(UPDATED_IS_PRIMARY)
+            .status(UPDATED_STATUS);
 
         restVehicleMockMvc
             .perform(

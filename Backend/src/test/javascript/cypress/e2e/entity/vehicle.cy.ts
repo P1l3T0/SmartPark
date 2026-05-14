@@ -15,7 +15,7 @@ describe('Vehicle e2e test', () => {
   const vehiclePageUrlPattern = new RegExp('/vehicle(\\?.*)?$');
   let username: string;
   let password: string;
-  // const vehicleSample = {"dateCreated":"2026-05-10T22:08:56.455Z","registrationNumber":"carboxyl huzzah","model":"aha yahoo mmm","brand":"yum mediocre"};
+  // const vehicleSample = {"dateCreated":"2026-05-11T04:49:02.332Z","registrationNumber":"immediately","model":"eek woot alligator","brand":"exactly","status":"ACTIVE"};
 
   let vehicle;
   // let userProfile;

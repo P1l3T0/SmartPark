@@ -128,6 +128,9 @@ export const Vehicle = () => {
                 <th className="hand" onClick={sort('isPrimary')}>
                   Is Primary <FontAwesomeIcon icon={getSortIconByFieldName('isPrimary')} />
                 </th>
+                <th className="hand" onClick={sort('status')}>
+                  Status <FontAwesomeIcon icon={getSortIconByFieldName('status')} />
+                </th>
                 <th>
                   Owner <FontAwesomeIcon icon="sort" />
                 </th>
@@ -147,6 +150,7 @@ export const Vehicle = () => {
                   <td>{vehicle.model}</td>
                   <td>{vehicle.brand}</td>
                   <td>{vehicle.isPrimary ? 'true' : 'false'}</td>
+                  <td>{vehicle.status}</td>
                   <td>{vehicle.owner ? <Link to={`/user-profile/${vehicle.owner.id}`}>{vehicle.owner.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
