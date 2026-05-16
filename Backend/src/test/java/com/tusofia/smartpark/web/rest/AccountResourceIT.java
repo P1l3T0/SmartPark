@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tusofia.smartpark.IntegrationTest;
 import com.tusofia.smartpark.config.Constants;
 import com.tusofia.smartpark.domain.User;
+import com.tusofia.smartpark.domain.UserProfile;
 import com.tusofia.smartpark.repository.AuthorityRepository;
 import com.tusofia.smartpark.repository.UserRepository;
 import com.tusofia.smartpark.security.AuthoritiesConstants;
@@ -16,6 +17,7 @@ import com.tusofia.smartpark.service.dto.AdminUserDTO;
 import com.tusofia.smartpark.service.dto.PasswordChangeDTO;
 import com.tusofia.smartpark.dto.KeyAndPasswordVM;
 import com.tusofia.smartpark.dto.ManagedUserVM;
+import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Stream;
@@ -60,6 +62,9 @@ class AccountResourceIT {
     @Autowired
     private MockMvc restAccountMockMvc;
 
+    @Autowired
+    private EntityManager em;
+
     private Long numberOfUsers;
 
     @BeforeEach
@@ -71,6 +76,15 @@ class AccountResourceIT {
     void cleanupAndCheck() {
         assertThat(userRepository.count()).isEqualTo(numberOfUsers);
         numberOfUsers = null;
+    }
+
+    private void deleteRegisteredUser(String login) {
+        em
+            .createQuery("select userProfile from UserProfile userProfile where userProfile.user.login = :login", UserProfile.class)
+            .setParameter("login", login)
+            .getResultList()
+            .forEach(em::remove);
+        userService.deleteUser(login);
     }
 
     @Test
@@ -141,7 +155,7 @@ class AccountResourceIT {
 
         assertThat(userRepository.findOneByLogin("test-register-valid")).isPresent();
 
-        userService.deleteUser("test-register-valid");
+        deleteRegisteredUser("test-register-valid");
     }
 
     @Test
@@ -241,22 +255,15 @@ class AccountResourceIT {
             .perform(post("/api/register").contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(firstUser)))
             .andExpect(status().isCreated());
 
-        // Second (non activated) user
+        // Registered users are activated immediately, so a duplicate login is rejected.
         restAccountMockMvc
             .perform(post("/api/register").contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(secondUser)))
-            .andExpect(status().isCreated());
+            .andExpect(status().isBadRequest());
 
-        Optional<User> testUser = userRepository.findOneByEmailIgnoreCase("alice2@example.com");
-        assertThat(testUser).isPresent();
-        testUser.orElseThrow().setActivated(true);
-        userRepository.save(testUser.orElseThrow());
+        assertThat(userRepository.findOneByLogin("alice")).isPresent();
+        assertThat(userRepository.findOneByEmailIgnoreCase("alice2@example.com")).isEmpty();
 
-        // Second (already activated) user
-        restAccountMockMvc
-            .perform(post("/api/register").contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(secondUser)))
-            .andExpect(status().is4xxClientError());
-
-        userService.deleteUser("alice");
+        deleteRegisteredUser("alice");
     }
 
     @Test
@@ -292,16 +299,16 @@ class AccountResourceIT {
         secondUser.setLangKey(firstUser.getLangKey());
         secondUser.setAuthorities(new HashSet<>(firstUser.getAuthorities()));
 
-        // Register second (non activated) user
+        // Registered users are activated immediately, so a duplicate email is rejected.
         restAccountMockMvc
             .perform(post("/api/register").contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(secondUser)))
-            .andExpect(status().isCreated());
+            .andExpect(status().isBadRequest());
 
         Optional<User> testUser2 = userRepository.findOneByLogin("test-register-duplicate-email");
-        assertThat(testUser2).isEmpty();
+        assertThat(testUser2).isPresent();
 
         Optional<User> testUser3 = userRepository.findOneByLogin("test-register-duplicate-email-2");
-        assertThat(testUser3).isPresent();
+        assertThat(testUser3).isEmpty();
 
         // Duplicate email - with uppercase email address
         ManagedUserVM userWithUpperCaseEmail = new ManagedUserVM();
@@ -315,24 +322,15 @@ class AccountResourceIT {
         userWithUpperCaseEmail.setLangKey(firstUser.getLangKey());
         userWithUpperCaseEmail.setAuthorities(new HashSet<>(firstUser.getAuthorities()));
 
-        // Register third (not activated) user
+        // Duplicate email checks are case-insensitive.
         restAccountMockMvc
             .perform(post("/api/register").contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(userWithUpperCaseEmail)))
-            .andExpect(status().isCreated());
+            .andExpect(status().isBadRequest());
 
         Optional<User> testUser4 = userRepository.findOneByLogin("test-register-duplicate-email-3");
-        assertThat(testUser4).isPresent();
-        assertThat(testUser4.orElseThrow().getEmail()).isEqualTo("test-register-duplicate-email@example.com");
+        assertThat(testUser4).isEmpty();
 
-        testUser4.orElseThrow().setActivated(true);
-        userService.updateUser((new AdminUserDTO(testUser4.orElseThrow())));
-
-        // Register 4th (already activated) user
-        restAccountMockMvc
-            .perform(post("/api/register").contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(secondUser)))
-            .andExpect(status().is4xxClientError());
-
-        userService.deleteUser("test-register-duplicate-email-3");
+        deleteRegisteredUser("test-register-duplicate-email");
     }
 
     @Test
@@ -359,7 +357,7 @@ class AccountResourceIT {
             .hasSize(1)
             .containsExactly(authorityRepository.findById(AuthoritiesConstants.USER).orElseThrow());
 
-        userService.deleteUser("badguy");
+        deleteRegisteredUser("badguy");
     }
 
     @Test
