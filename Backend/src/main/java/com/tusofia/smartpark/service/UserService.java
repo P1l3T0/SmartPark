@@ -3,7 +3,9 @@ package com.tusofia.smartpark.service;
 import com.tusofia.smartpark.config.Constants;
 import com.tusofia.smartpark.domain.Authority;
 import com.tusofia.smartpark.domain.User;
+import com.tusofia.smartpark.domain.UserProfile;
 import com.tusofia.smartpark.repository.AuthorityRepository;
+import com.tusofia.smartpark.repository.UserProfileRepository;
 import com.tusofia.smartpark.repository.UserRepository;
 import com.tusofia.smartpark.security.AuthoritiesConstants;
 import com.tusofia.smartpark.security.SecurityUtils;
@@ -41,16 +43,20 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
+    private final UserProfileRepository userProfileRepository;
+
     public UserService(
         UserRepository userRepository,
         PasswordEncoder passwordEncoder,
         AuthorityRepository authorityRepository,
-        CacheManager cacheManager
+        CacheManager cacheManager,
+        UserProfileRepository userProfileRepository
     ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.userProfileRepository = userProfileRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -134,6 +140,13 @@ public class UserService {
         userRepository.save(newUser);
         this.clearUserCaches(newUser);
         LOG.debug("Created Information for User: {}", newUser);
+
+        UserProfile userProfile = new UserProfile();
+        userProfile.setUser(newUser);
+        userProfile.setDateCreated(Instant.now());
+        userProfileRepository.save(userProfile);
+        LOG.debug("Created UserProfile for User: {}", newUser);
+
         return newUser;
     }
 

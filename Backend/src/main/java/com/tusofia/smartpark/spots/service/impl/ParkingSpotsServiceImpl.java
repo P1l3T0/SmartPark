@@ -10,8 +10,6 @@ import com.tusofia.smartpark.spots.service.ParkingSpotsService;
 import com.tusofia.smartpark.spots.service.dto.ParkingSpotDTO;
 import com.tusofia.smartpark.spots.service.dto.ParkingSpotStatus;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +32,7 @@ public class ParkingSpotsServiceImpl implements ParkingSpotsService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ParkingSpotDTO> findAllWithStatus(LocalDateTime startDate, LocalDateTime endDate) {
+    public List<ParkingSpotDTO> findAllWithStatus(Instant startDate, Instant endDate) {
         if (startDate == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "startDate is required");
         }
@@ -42,54 +40,55 @@ public class ParkingSpotsServiceImpl implements ParkingSpotsService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "endDate must be after startDate");
         }
 
-        Instant startInstant = toInstant(startDate);
-        Instant endInstant = endDate == null ? null : toInstant(endDate);
-
         User currentUser = userService
             .getUserWithAuthorities()
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Current user could not be found"));
 
         List<ParkingSpot> parkingSpots = parkingSpotsRepository.findAllByOrderBySlotNumberAsc();
-        List<Booking> bookings = endInstant == null
-            ? parkingSpotsRepository.findConfirmedBookingsContainingDate(startInstant, BookingStatus.CONFIRMED)
-            : parkingSpotsRepository.findConfirmedBookingsOverlappingPeriod(startInstant, endInstant, BookingStatus.CONFIRMED);
+        List<Booking> bookings = endDate == null
+            ? parkingSpotsRepository.findConfirmedBookingsContainingDate(startDate, BookingStatus.CONFIRMED)
+            : parkingSpotsRepository.findConfirmedBookingsOverlappingPeriod(startDate, endDate, BookingStatus.CONFIRMED);
 
-        Map<Long, ParkingSpotStatus> statusesByParkingSpotId = buildStatusesByParkingSpotId(bookings, currentUser.getId());
+        Map<Long, SpotInfo> infoByParkingSpotId = buildStatusesByParkingSpotId(bookings, currentUser.getId());
 
         return parkingSpots
             .stream()
-            .map(parkingSpot ->
-                new ParkingSpotDTO(
+            .map(parkingSpot -> {
+                SpotInfo info = infoByParkingSpotId.get(parkingSpot.getId());
+                return new ParkingSpotDTO(
+                    parkingSpot.getId(),
                     parkingSpot.getSlotNumber(),
-                    statusesByParkingSpotId.getOrDefault(parkingSpot.getId(), ParkingSpotStatus.FREE)
-                )
-            )
+                    info != null ? info.status() : ParkingSpotStatus.FREE,
+                    info != null ? info.occupiedBy() : null,
+                    info != null ? info.bookingId() : null
+                );
+            })
             .toList();
     }
 
-    private Map<Long, ParkingSpotStatus> buildStatusesByParkingSpotId(List<Booking> bookings, Long currentUserId) {
-        Map<Long, ParkingSpotStatus> statusesByParkingSpotId = new HashMap<>();
+    private record SpotInfo(ParkingSpotStatus status, String occupiedBy, Long bookingId) {}
+
+    private Map<Long, SpotInfo> buildStatusesByParkingSpotId(List<Booking> bookings, Long currentUserId) {
+        Map<Long, SpotInfo> infoByParkingSpotId = new HashMap<>();
         for (Booking booking : bookings) {
             Long parkingSpotId = booking.getParkingSpot().getId();
             Long bookingUserId = booking.getUserProfile().getUser().getId();
-            ParkingSpotStatus status = bookingUserId.equals(currentUserId)
-                ? ParkingSpotStatus.OCCUPIED_BY_ME
-                : ParkingSpotStatus.OCCUPIED;
+            boolean isMine = bookingUserId.equals(currentUserId);
+            ParkingSpotStatus status = isMine ? ParkingSpotStatus.OCCUPIED_BY_ME : ParkingSpotStatus.OCCUPIED;
+            String occupiedBy = booking.getVehicle().getRegistrationNumber();
+            Long bookingId = isMine ? booking.getId() : null;
 
-            statusesByParkingSpotId.merge(
+            infoByParkingSpotId.merge(
                 parkingSpotId,
-                status,
-                (existingStatus, newStatus) ->
-                    ParkingSpotStatus.OCCUPIED_BY_ME.equals(existingStatus) ||
-                        ParkingSpotStatus.OCCUPIED_BY_ME.equals(newStatus)
-                        ? ParkingSpotStatus.OCCUPIED_BY_ME
-                        : ParkingSpotStatus.OCCUPIED
+                new SpotInfo(status, occupiedBy, bookingId),
+                (existing, incoming) ->
+                    ParkingSpotStatus.OCCUPIED_BY_ME.equals(existing.status())
+                        ? existing
+                        : ParkingSpotStatus.OCCUPIED_BY_ME.equals(incoming.status())
+                            ? incoming
+                            : existing
             );
         }
-        return statusesByParkingSpotId;
-    }
-
-    private Instant toInstant(LocalDateTime dateTime) {
-        return dateTime.atZone(ZoneId.systemDefault()).toInstant();
+        return infoByParkingSpotId;
     }
 }

@@ -1,12 +1,12 @@
 package com.tusofia.smartpark.bookings.service.dto;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public record BookingDTO(
     Long bookingId,
     String vehicleRegistrationNumber,
-    String slotNumber,
-    LocalDateTime startTime,
-    LocalDateTime endTime,
+    Long parkingSpotId,
+    Instant startTime,
+    Instant endTime,
     Boolean isCancelled
 ) {}

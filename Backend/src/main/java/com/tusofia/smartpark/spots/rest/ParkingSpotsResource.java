@@ -2,11 +2,10 @@ package com.tusofia.smartpark.spots.rest;
 
 import com.tusofia.smartpark.spots.service.ParkingSpotsService;
 import com.tusofia.smartpark.spots.service.dto.ParkingSpotDTO;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +26,8 @@ public class ParkingSpotsResource {
 
     @GetMapping("")
     public ResponseEntity<List<ParkingSpotDTO>> getParkingSpots(
-        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate
+        @RequestParam Instant startDate,
+        @RequestParam(required = false) Instant endDate
     ) {
         LOG.debug("REST request to get parking spots from {} to {}", startDate, endDate);
 

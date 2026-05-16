@@ -73,6 +73,9 @@ public interface BookingsRepository extends JpaRepository<Booking, Long> {
     @Query("select parkingSpot from ParkingSpot parkingSpot where parkingSpot.slotNumber = :slotNumber")
     Optional<ParkingSpot> findOneParkingSpotBySlotNumber(@Param("slotNumber") String slotNumber);
 
+    @Query("select parkingSpot from ParkingSpot parkingSpot where parkingSpot.id = :parkingSpotId")
+    Optional<ParkingSpot> findOneParkingSpotById(@Param("parkingSpotId") Long parkingSpotId);
+
     @Query(
         """
         select count(booking) > 0
