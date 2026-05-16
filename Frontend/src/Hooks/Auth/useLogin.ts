@@ -51,6 +51,9 @@ const useLogin = () => {
         scheduleRefresh(res.data.access_token);
         navigate("/home");
         queryClient.invalidateQueries({ queryKey: ["user"] });
+        queryClient.invalidateQueries({ queryKey: ["parking-spots"] });
+        queryClient.invalidateQueries({ queryKey: ["user-vehicles"] });
+        queryClient.invalidateQueries({ queryKey: ["bookings"] });
       })
       .catch((err: AxiosError) => {
         const error: CustomError = err.response?.data as CustomError;

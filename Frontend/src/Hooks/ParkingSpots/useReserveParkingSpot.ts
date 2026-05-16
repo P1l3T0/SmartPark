@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import api from "../../Utils/axiosInstance";
-import { reserveParkingSpotEndPoint } from "../../Utils/endpoints";
+import { createBookingEndPoint } from "../../Utils/endpoints";
 import type { ReserveParkingSpotRequest } from "../../Utils/interfaces";
 import type { DropDownListChangeEvent } from "@progress/kendo-react-dropdowns";
 import type { DateTimePickerChangeEvent } from "@progress/kendo-react-dateinputs";
@@ -36,37 +36,34 @@ const useReserveParkingSpot = () => {
   };
 
   const handleStartTimeChange = (e: DateTimePickerChangeEvent) => {
-    if (e.value) {
-      setReservation((prev) => ({
-        ...prev,
-        startTime: e.value as Date,
-      }));
-    }
+    setReservation((prev) => ({
+      ...prev,
+      startTime: e.value as Date,
+    }));
   };
 
   const handleEndTimeChange = (e: DateTimePickerChangeEvent) => {
-    if (e.value) {
-      setReservation((prev) => ({
-        ...prev,
-        endTime: e.value as Date,
-      }));
-    }
+    setReservation((prev) => ({
+      ...prev,
+      endTime: e.value as Date,
+    }));
   };
 
   const reserveParkingSpot = async () => {
     await api
-      .post(reserveParkingSpotEndPoint, reservation, { withCredentials: true })
-      .then(() => {
-        queryClient.invalidateQueries({ queryKey: ["parking-spots"] });
-        setVisible(false);
-      })
-      .catch((err: AxiosError) => {
-        setError((err.response?.data as string) || "An error occurred");
-      });
+      .post(createBookingEndPoint, reservation, { withCredentials: true });
   };
 
   const { mutateAsync } = useMutation({
     mutationFn: reserveParkingSpot,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["parking-spots"] });
+      queryClient.invalidateQueries({ queryKey: ["bookings"] });
+      setVisible(false);
+    },
+    onError: (err: AxiosError) => {
+      setError((err.response?.data as string) || "An error occurred");
+    },
   });
 
   const handleSubmit = async () => mutateAsync();

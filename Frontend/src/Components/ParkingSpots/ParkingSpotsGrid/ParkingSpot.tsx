@@ -13,9 +13,9 @@ const ParkingSpot = ({ slotNumber, occupiedBy, status, onAvailableClick, onCance
   const config = statusConfig[status];
 
   const handleClick = () => {
-    if (status === "Available") {
+    if (status === "FREE") {
       onAvailableClick();
-    } else if (status === "OccupiedByMe") {
+    } else if (status === "OCCUPIED_BY_ME") {
       onCancelClick();
     }
   };
@@ -24,7 +24,7 @@ const ParkingSpot = ({ slotNumber, occupiedBy, status, onAvailableClick, onCance
     <div
       title={`${slotNumber}`}
       onClick={handleClick}
-      className={`flex flex-col items-center justify-between rounded-xl p-3 pt-2 cursor-pointer hover:scale-105 border-2 min-h-25 ${config.border} ${config.bg}`}
+      className={`flex flex-col items-center justify-between rounded-xl p-3 pt-2 hover:scale-105 border-2 min-h-25 ${config.border} ${config.bg} ${config.cursor}`}
     >
       <div className="flex w-full justify-between items-center">
         <span className={`text-sm ${config.text}`}>{slotNumber}</span>

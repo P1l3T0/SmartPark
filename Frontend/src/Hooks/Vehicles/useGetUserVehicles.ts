@@ -8,13 +8,7 @@ const useGetUserVehicles = () => {
   const getUserVehicles = async (): Promise<VehicleResponse[] | void> => {
     return await api
       .get<VehicleResponse[]>(`${getUserVehiclesEndPoint}`, { withCredentials: true })
-      .then((res: AxiosResponse<VehicleResponse[]>) => {
-        return res.data.map((vehicle) => ({
-          ...vehicle,
-          createdDate: new Date(vehicle.createdDate),
-          lastModifiedDate: new Date(vehicle.lastModifiedDate),
-        }));
-      })
+      .then((res: AxiosResponse<VehicleResponse[]>) => res.data)
       .catch((err: AxiosError) => {
         console.error(err);
         return [];
