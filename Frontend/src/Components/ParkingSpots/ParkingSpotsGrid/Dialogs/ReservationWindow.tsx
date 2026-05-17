@@ -43,6 +43,8 @@ const ReservationWindow = ({
             <DateTimePicker
               id="startTime"
               name="startTime"
+              min={new Date()}
+              max={new Date(new Date().setDate(new Date().getDate() + 1))}
               value={reservation.startTime}
               onChange={handleStartTimeChange}
               format="dd/MM/yyyy HH:mm"
@@ -53,6 +55,8 @@ const ReservationWindow = ({
             <DateTimePicker
               id="endTime"
               name="endTime"
+              min={new Date()}
+              max={new Date(new Date().setDate(new Date().getDate() + 1))}
               value={reservation.endTime}
               onChange={handleEndTimeChange}
               format="dd/MM/yyyy HH:mm"
