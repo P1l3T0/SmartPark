@@ -3,6 +3,7 @@ package com.tusofia.smartpark.vehicles.service.impl;
 import com.tusofia.smartpark.domain.User;
 import com.tusofia.smartpark.domain.UserProfile;
 import com.tusofia.smartpark.domain.Vehicle;
+import com.tusofia.smartpark.domain.enumeration.BookingStatus;
 import com.tusofia.smartpark.domain.enumeration.VehicleStatus;
 import com.tusofia.smartpark.service.UserService;
 import com.tusofia.smartpark.vehicles.repository.VehiclesRepository;
@@ -100,6 +101,10 @@ public class VehiclesServiceImpl implements VehiclesService {
         Vehicle vehicle = vehiclesRepository
             .findOneByIdAndOwnerUserId(vehicleId, currentUser.getId())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Vehicle could not be found"));
+
+        vehiclesRepository.cancelActiveBookingsForVehicle(
+            vehicle.getId(), Instant.now(), BookingStatus.CONFIRMED, BookingStatus.CANCELLED
+        );
 
         vehicle.setStatus(VehicleStatus.DISABLED);
         if (Boolean.TRUE.equals(vehicle.getIsPrimary())) {

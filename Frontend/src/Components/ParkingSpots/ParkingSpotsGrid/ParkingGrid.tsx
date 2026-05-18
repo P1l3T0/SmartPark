@@ -1,32 +1,22 @@
+import { useRef } from "react";
 import useGetParkingSpots from "../../../Hooks/ParkingSpots/useGetParkingSpots";
-import useReserveParkingSpot from "../../../Hooks/ParkingSpots/useReserveParkingSpot";
-import useCancelReservation from "../../../Hooks/ParkingSpots/useCancelReservation";
-import useGetUserVehicles from "../../../Hooks/Vehicles/useGetUserVehicles";
+import useCancelConfirm from "../../../Hooks/ParkingSpots/useCancelConfirm";
+import useAvailableVehicles from "../../../Hooks/Vehicles/useAvailableVehicles";
 import ParkingSpot from "./ParkingSpot";
-import ReservationWindow from "./ReservationWindow";
+import { type ParkingReservationDialogHandle } from "./Dialogs/ReservationDialog";
 import ErrorDialog from "../../Common/ErrorDialog";
+import CancelReservationDialog from "./Dialogs/CancelReservationDialog";
+import { ErrorComponent, LoaderComponent } from "../../Common/States";
+import ReservationDialog from "./Dialogs/ReservationDialog";
 
 const ParkingGrid = () => {
-  const { COLS, ROWS, parkingSpots } = useGetParkingSpots();
-  const { data: vehicles } = useGetUserVehicles();
-  const {
-    visible,
-    reservation,
-    toggleDialog,
-    openReservationWindow,
-    handleDropDownChange,
-    handleStartTimeChange,
-    handleEndTimeChange,
-    handleSubmit,
-  } = useReserveParkingSpot();
-  const {
-    handleCancelReservation,
-    visible: cancelErrorVisible,
-    error: cancelError,
-    toggleDialog: toggleCancelErrorDialog,
-  } = useCancelReservation();
+  const reservationDialogRef = useRef<ParkingReservationDialogHandle>(null);
+  const { COLS, ROWS, parkingSpots, isLoading, isError } = useGetParkingSpots();
+  const vehicleRegistrationNumbers = useAvailableVehicles(parkingSpots);
+  const { cancelConfirm, openCancelConfirm, closeCancelConfirm, confirmCancel, errorVisible, error, toggleErrorDialog } = useCancelConfirm();
 
-  const vehicleRegistrationNumbers = vehicles?.map((v) => v.registrationNumber) ?? [];
+  if (isLoading) return <LoaderComponent />;
+  if (isError) return <ErrorComponent />;
 
   return (
     <div className="flex flex-col gap-3">
@@ -42,18 +32,20 @@ const ParkingGrid = () => {
               </span>
             </div>
 
-            <div className="grid sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
               {rowSpots.map((spot) => (
                 <ParkingSpot
                   key={spot.id}
-                  {...spot}
-                  onAvailableClick={() => openReservationWindow(spot.id)}
-                  onCancelClick={() => handleCancelReservation(spot.id)}
+                  slotNumber={spot.slotNumber}
+                  occupiedBy={spot.occupiedBy}
+                  status={spot.status}
+                  onAvailableClick={() => reservationDialogRef.current?.open(spot.id)}
+                  onCancelClick={() => openCancelConfirm(spot.bookingId!, spot.slotNumber)}
                 />
               ))}
             </div>
 
-            {!isLastRow && rowIdx % 2 === 1 && (
+            {!isLastRow && (
               <div className="flex items-center gap-2 mt-4 mb-1">
                 <div className="flex-1 h-px bg-divider" />
                 <span className="text-sm text-text-tertiary px-2 whitespace-nowrap">
@@ -62,27 +54,16 @@ const ParkingGrid = () => {
                 <div className="flex-1 h-px bg-divider" />
               </div>
             )}
-
           </div>
         );
       })}
 
-      {visible && (
-        <ReservationWindow
-          reservation={reservation}
-          vehicleRegistrationNumbers={vehicleRegistrationNumbers}
-          toggleDialog={toggleDialog}
-          handleSubmit={handleSubmit}
-          handleDropDownChange={handleDropDownChange}
-          handleStartTimeChange={handleStartTimeChange}
-          handleEndTimeChange={handleEndTimeChange}
-        />
-      )}
-
-      <ErrorDialog visible={cancelErrorVisible} error={cancelError} toggleDialog={toggleCancelErrorDialog} />
+      <ErrorDialog visible={errorVisible} error={error} toggleDialog={toggleErrorDialog} />
+      <ReservationDialog ref={reservationDialogRef} vehicleRegistrationNumbers={vehicleRegistrationNumbers} />
+      <CancelReservationDialog visible={cancelConfirm.visible} slotNumber={cancelConfirm.slotNumber} onConfirm={confirmCancel} onClose={closeCancelConfirm} />
     </div>
   );
-} 
+}
 
 export default ParkingGrid;
 

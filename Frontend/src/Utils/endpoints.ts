@@ -8,8 +8,9 @@ const baseURL: string = (() => {
       })();
 })();
 
-const vehicleController: string = `${baseURL}/vehicle`;
-const parkingSpotController: string = `${baseURL}/parking-spot`;
+const vehicleController: string = `${baseURL}/v1/vehicles`;
+const parkingSpotController: string = `${baseURL}/v1/parking-spots`;
+const bookingsController: string = `${baseURL}/v1/bookings`;
 
 // Auth
 export const loginEndPoint: string = `${baseURL}/authenticate`;
@@ -18,18 +19,18 @@ export const refreshTokenEndPoint: string = `${baseURL}/authenticate/refresh`;
 
 // Account
 export const getCurrentUserEndPoint: string = `${baseURL}/account`;
-export const changePasswordEndPoint: string = `${baseURL}/account/change-password`;
-export const resetPasswordInitEndPoint: string = `${baseURL}/account/reset-password/init`;
-export const resetPasswordFinishEndPoint: string = `${baseURL}/account/reset-password/finish`;
-export const activateAccountEndPoint: string = `${baseURL}/activate`;
 
 // Vehicle
-export const createVehicleEndPoint: string = `${vehicleController}/create`;
-export const updateVehicleEndPoint: string = `${vehicleController}/update`;
-export const getUserVehiclesEndPoint: string = `${vehicleController}/get/user-vehicles`;
-export const deleteVehicleEndPoint: string = `${vehicleController}/delete`;
+export const createVehicleEndPoint: string = vehicleController;
+export const updateVehicleEndPoint: string = vehicleController;
+export const getUserVehiclesEndPoint: string = vehicleController;
+export const getVehicleEndPoint: string = vehicleController;
+export const deleteVehicleEndPoint: string = vehicleController;
 
 // Parking Spot
-export const getParkingSpotsEndPoint: string = `${parkingSpotController}/get/all`;
-export const reserveParkingSpotEndPoint: string = `${parkingSpotController}/reserve`;
-export const cancelReservationEndPoint: string = `${parkingSpotController}/cancel`;
+export const getParkingSpotsEndPoint: string = parkingSpotController;
+
+// Bookings
+export const createBookingEndPoint: string = bookingsController;
+export const getBookingsEndPoint: string = bookingsController;
+export const cancelBookingEndPoint: string = bookingsController;

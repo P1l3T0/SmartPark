@@ -77,7 +77,6 @@ export interface VehicleRequest {
   model: string;
   registrationNumber: string;
   isPrimary: boolean;
-  isUpdating?: boolean;
 }
 
 export interface VehicleResponse extends Base {
@@ -87,21 +86,24 @@ export interface VehicleResponse extends Base {
   isPrimary: boolean;
 }
 
-export interface Booking extends Base {
-  vehicle: string;
-  parkingSpot: string;
+export interface BookingResponse {
+  bookingId: number;
+  vehicleRegistrationNumber: string;
+  parkingSpotId: number;
   startTime: Date;
   endTime: Date;
   isCancelled: boolean;
 }
 
-export interface ParkingSpotResponse extends Base {
+export interface ParkingSpotResponse {
+  id: number;
   slotNumber: string;
-  occupiedBy: string | null;
   status: ParkingSpotStatus;
+  occupiedBy: string | null;
+  bookingId: number | null;
 }
 
-export type ParkingSpotStatus = "Available" | "Occupied" | "OccupiedByMe";
+export type ParkingSpotStatus = "FREE" | "OCCUPIED" | "OCCUPIED_BY_ME";
 
 export interface ParkingSpotConfig {
   bg: string;
@@ -112,6 +114,7 @@ export interface ParkingSpotConfig {
   border?: string;
   text?: string;
   dot?: string;
+  cursor?: string;
 }
 
 export interface ReserveParkingSpotRequest {

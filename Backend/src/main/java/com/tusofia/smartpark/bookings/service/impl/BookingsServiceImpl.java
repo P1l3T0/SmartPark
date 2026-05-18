@@ -12,8 +12,6 @@ import com.tusofia.smartpark.domain.enumeration.BookingStatus;
 import com.tusofia.smartpark.domain.enumeration.VehicleStatus;
 import com.tusofia.smartpark.service.UserService;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -47,8 +45,8 @@ public class BookingsServiceImpl implements BookingsService {
     public void createBookingForUser(BookingDTO bookingDTO) {
         validateBookingRequest(bookingDTO);
 
-        Instant startInstant = toInstant(bookingDTO.startTime());
-        Instant endInstant = toInstant(bookingDTO.endTime());
+        Instant startInstant = bookingDTO.startTime();
+        Instant endInstant = bookingDTO.endTime();
         User currentUser = userService
             .getUserWithAuthorities()
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Current user could not be found"));
@@ -62,7 +60,7 @@ public class BookingsServiceImpl implements BookingsService {
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Active vehicle does not belong to current user"));
 
         ParkingSpot parkingSpot = bookingsRepository
-            .findOneParkingSpotBySlotNumber(bookingDTO.slotNumber())
+            .findOneParkingSpotById(bookingDTO.parkingSpotId())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Parking spot could not be found"));
 
         if (bookingsRepository.existsParkingSpotBookingOverlapping
@@ -109,8 +107,8 @@ public class BookingsServiceImpl implements BookingsService {
         if (bookingDTO == null) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Booking request body is required");
         }
-        if (bookingDTO.slotNumber() == null || bookingDTO.slotNumber().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "slotNumber is required");
+        if (bookingDTO.parkingSpotId() == null) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "parkingSpotId is required");
         }
         if (bookingDTO.vehicleRegistrationNumber() == null || bookingDTO.vehicleRegistrationNumber().isBlank()) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "vehicleRegistrationNumber is required");
@@ -130,18 +128,10 @@ public class BookingsServiceImpl implements BookingsService {
         return new BookingDTO(
             booking.getId(),
             booking.getVehicle().getRegistrationNumber(),
-            booking.getParkingSpot().getSlotNumber(),
-            toLocalDateTime(booking.getStartDate()),
-            toLocalDateTime(booking.getEndDate()),
+            booking.getParkingSpot().getId(),
+            booking.getStartDate(),
+            booking.getEndDate(),
             BookingStatus.CANCELLED.equals(booking.getStatus())
         );
-    }
-
-    private LocalDateTime toLocalDateTime(Instant instant) {
-        return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-    }
-
-    private Instant toInstant(LocalDateTime dateTime) {
-        return dateTime.atZone(ZoneId.systemDefault()).toInstant();
     }
 }

@@ -20,6 +20,7 @@ public interface ParkingSpotsRepository extends JpaRepository<ParkingSpot, Long>
         select booking
         from Booking booking
         join fetch booking.parkingSpot parkingSpot
+        join fetch booking.vehicle vehicle
         join fetch booking.userProfile userProfile
         join fetch userProfile.user user
         where booking.status = :status
@@ -37,6 +38,7 @@ public interface ParkingSpotsRepository extends JpaRepository<ParkingSpot, Long>
         select booking
         from Booking booking
         join fetch booking.parkingSpot parkingSpot
+        join fetch booking.vehicle vehicle
         join fetch booking.userProfile userProfile
         join fetch userProfile.user user
         where booking.status = :status

@@ -16,17 +16,15 @@ const useDeleteVehicle = () => {
 
   const deleteVehicle = async (vehicleId: number) => {
     await api
-      .delete(`${deleteVehicleEndPoint}/${vehicleId}`, { withCredentials: true })
-      .catch((err: AxiosError) => {
-        setError((err.response?.data as string) || "An error occurred");
-        setVisible(true);
-      });
+      .delete(`${deleteVehicleEndPoint}/${vehicleId}`, { withCredentials: true });
   };
 
   const { mutateAsync } = useMutation({
     mutationFn: deleteVehicle,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user-vehicles"] });
+      queryClient.invalidateQueries({ queryKey: ["parking-spots"] });
+      queryClient.invalidateQueries({ queryKey: ["bookings"] });
     },
     onError: (err: AxiosError) => {
       setError((err.response?.data as string) || "An error occurred");

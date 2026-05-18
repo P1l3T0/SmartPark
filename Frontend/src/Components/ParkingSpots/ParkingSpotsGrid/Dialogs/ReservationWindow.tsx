@@ -1,9 +1,9 @@
-import { Window } from "@progress/kendo-react-dialogs";
+import { Dialog, DialogActionsBar } from "@progress/kendo-react-dialogs";
 import { Button } from "@progress/kendo-react-buttons";
 import { DropDownList, type DropDownListChangeEvent } from "@progress/kendo-react-dropdowns";
 import { DateTimePicker, type DateTimePickerChangeEvent } from "@progress/kendo-react-dateinputs";
 import { Label } from "@progress/kendo-react-labels";
-import type { ReserveParkingSpotRequest } from "../../../Utils/interfaces";
+import type { ReserveParkingSpotRequest } from "../../../../Utils/interfaces";
 
 interface ReservationWindowProps {
   reservation: ReserveParkingSpotRequest;
@@ -25,8 +25,8 @@ const ReservationWindow = ({
   handleEndTimeChange,
 }: ReservationWindowProps) => {
   return (
-    <Window title="Reserve Parking Spot" onClose={toggleDialog} initialHeight={380} initialWidth={450}>
-      <form className="space-y-3">
+    <Dialog title={`Reserve Parking Spot ${reservation.parkingSpotId}`} onClose={toggleDialog}>
+      <form className="space-y-3 p-2">
         <div className="space-y-2">
           <div>
             <Label className="text-sm font-medium text-text-secondary">Vehicle Registration Number</Label>
@@ -43,6 +43,8 @@ const ReservationWindow = ({
             <DateTimePicker
               id="startTime"
               name="startTime"
+              min={new Date()}
+              max={new Date(new Date().setDate(new Date().getDate() + 1))}
               value={reservation.startTime}
               onChange={handleStartTimeChange}
               format="dd/MM/yyyy HH:mm"
@@ -53,18 +55,20 @@ const ReservationWindow = ({
             <DateTimePicker
               id="endTime"
               name="endTime"
+              min={new Date()}
+              max={new Date(new Date().setDate(new Date().getDate() + 1))}
               value={reservation.endTime}
               onChange={handleEndTimeChange}
               format="dd/MM/yyyy HH:mm"
             />
           </div>
         </div>
-        <div className="flex justify-center gap-2 pt-5">
-          <Button type="button" themeColor="primary" className="w-full" onClick={handleSubmit}>Reserve</Button>
-          <Button type="button" themeColor="error" className="w-full" onClick={toggleDialog}>Cancel</Button>
-        </div>
       </form>
-    </Window>
+      <DialogActionsBar>
+        <Button type="button" themeColor="primary" onClick={handleSubmit}>Reserve</Button>
+        <Button type="button" themeColor="error" onClick={toggleDialog}>Cancel</Button>
+      </DialogActionsBar>
+    </Dialog>
   );
 };
 

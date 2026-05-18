@@ -9,15 +9,14 @@ const useGetParkingSpots = () => {
   const COLS = [1, 2, 3, 4, 5, 6];
 
   const getParkingSpots = async (): Promise<ParkingSpotResponse[]> => {
+    const startDate = new Date();
+
     return await api
-      .get<ParkingSpotResponse[]>(`${getParkingSpotsEndPoint}`, { withCredentials: true })
-      .then((res: AxiosResponse<ParkingSpotResponse[]>) => {
-        return res.data.map((spot) => ({
-          ...spot,
-          createdDate: new Date(spot.createdDate),
-          lastModifiedDate: new Date(spot.lastModifiedDate),
-        }));
+      .get<ParkingSpotResponse[]>(getParkingSpotsEndPoint, {
+        params: { startDate },
+        withCredentials: true,
       })
+      .then((res: AxiosResponse<ParkingSpotResponse[]>) => res.data)
       .catch((err: AxiosError) => {
         console.error(err);
         return [];

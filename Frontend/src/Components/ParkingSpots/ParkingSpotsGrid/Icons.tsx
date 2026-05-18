@@ -25,25 +25,28 @@ const KeyIcon = () => (
 );
 
 const statusConfig: Record<ParkingSpotStatus, ParkingSpotConfig> = {
-  Available: {
+  FREE: {
     border: "border-success",
     bg: "bg-success/10",
     text: "text-success",
     dot: "bg-success",
+    cursor: "cursor-pointer",
     icon: <AvailableIcon />,
   },
-  OccupiedByMe: {
+  OCCUPIED_BY_ME: {
     border: "border-primary",
     bg: "bg-primary/10",
     text: "text-primary",
     dot: "bg-primary",
+    cursor: "cursor-pointer",
     icon: <KeyIcon />,
   },
-  Occupied: {
+  OCCUPIED: {
     border: "border-error",
     bg: "bg-error/10",
     text: "text-error",
     dot: "bg-error",
+    cursor: "cursor-not-allowed",
     icon: <CarIcon />,
   },
 };

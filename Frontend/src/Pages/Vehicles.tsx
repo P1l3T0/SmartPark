@@ -1,11 +1,5 @@
 import VehiclesContainer from "../Components/Vehicles/VehiclesContainer";
 
-const Vehicles = () => {
-  return (
-    <>
-      <VehiclesContainer />
-    </>
-  );
-};
+const Vehicles = () => <VehiclesContainer />;
 
 export default Vehicles;

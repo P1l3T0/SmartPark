@@ -1,11 +1,5 @@
 import LoginContainer from "../Components/Auth/Login/LoginContainer";
 
-const Login = () => {
-  return (
-    <>
-      <LoginContainer />
-    </>
-  );
-};
+const Login = () => <LoginContainer />;
 
 export default Login;

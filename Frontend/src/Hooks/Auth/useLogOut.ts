@@ -11,7 +11,7 @@ const useLogOut = () => {
     document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     document.cookie = "refresh_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     setAuth({});
-    queryClient.removeQueries({ queryKey: ["user"] });
+    queryClient.clear();
     logout();
     navigate("/");
   };

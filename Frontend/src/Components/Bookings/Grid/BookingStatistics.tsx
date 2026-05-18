@@ -1,6 +1,7 @@
-import { total, active, cancelled } from "../../../Utils/data";
+import useGetBookings from "../../../Hooks/Bookings/useGetBookings";
 
 const BookingStatistics = () => {
+  const { total, active, cancelled } = useGetBookings();
   const stats = [
     {
       label: "Total Bookings",

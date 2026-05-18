@@ -21,8 +21,7 @@ const useUpdateVehicle = (vehicle: VehicleResponse) => {
     registrationNumber: vehicle.registrationNumber ?? "",
     model: vehicle.model ?? "",
     brand: vehicle.brand ?? "",
-    isPrimary: vehicle.isPrimary ?? false,
-    isUpdating: true,
+    isPrimary: vehicle.isPrimary ?? false
   });
 
   const toggleDialog = () => {
@@ -67,11 +66,7 @@ const useUpdateVehicle = (vehicle: VehicleResponse) => {
         `${updateVehicleEndPoint}/${vehicle.id}`,
         updatedVehicle,
         { withCredentials: true },
-      )
-      .catch((err: AxiosError) => {
-        setError(err.response?.data as string || "An error occurred");
-        setDialogVisible(true);
-      });
+      );
   };
 
   const { mutateAsync } = useMutation({

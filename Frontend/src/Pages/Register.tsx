@@ -1,11 +1,5 @@
 import RegisterContainer from "../Components/Auth/Register/RegisterContainer";
 
-const Register = () => {
-  return (
-    <>
-      <RegisterContainer />
-    </>
-  );
-};
+const Register = () => <RegisterContainer />;
 
 export default Register;
